@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <%= csrf_meta_tags %>
 
-  <title>Live Event</title>
+  <title><%= @event.name %></title>
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>  
 </head>
-<body class="section <%= section_label %>">
+<body class="section <%= section_label %> is-timeline-opened">
 
 <main role="main" class="layout main">
 <%= yield %>
