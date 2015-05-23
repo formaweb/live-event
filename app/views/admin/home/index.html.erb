@@ -1,0 +1,43 @@
+<div class="messages">
+  <% @messages.each do |message| %>
+  <div class="message" id="message_<%= message.id %>">
+    <%= image_tag message.user.photo(nil), width: '20', style: 'border-radius: 100%;' %> 
+    <%= message.user.name %>: <%= message.message %> 
+    <% if current_user.id == message.user.id %>
+    <%= link_to 'apagar', '#', :'data-id' => message.id, class: 'delete-message' %>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+<div class="controls" style="position: fixed; bottom: 0;">
+<% if current_user.can_edit_event %>
+<%= form_tag '#', id: 'event_form' do %>
+  
+  <%= label_tag 'event_name', 'Nome do evento:' %>
+  <%= text_field_tag 'event_name', @event.name %>
+  
+  <%= label_tag 'video_url', 'Link do Vídeo:' %>
+  <%= text_field_tag 'video_url', @event.video_url %>
+  
+  <button>Salvar</button>
+<% end %>
+<% end %>
+
+<hr>
+
+<%= form_tag '#', id: 'message_form' do %>
+  
+  <%= label_tag 'message', 'Mensagem:' %><br>
+  <%= text_area_tag 'message' %>
+  
+  <br>
+  
+  <%= check_box_tag 'typing', 'typing', true %>
+  <%= label_tag 'typing', 'Mostrar aos administradores o que estou digitando' %>
+  
+  <br>
+  
+  <button>Enviar</button>
+<% end %>
+</div>

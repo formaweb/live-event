@@ -47,3 +47,5 @@ end
 gem 'puma'
 gem 'tubesock'
 gem 'redis-rails'
+
+gem 'devise'
