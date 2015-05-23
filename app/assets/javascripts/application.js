@@ -1,17 +1,16 @@
-//= require jquery
-//= require websocket
-
+//= require 'components/websocket'
 //= require 'components/timeline'
 
 (function () {
   'use strict';
 
-  var websocket = window.Formaweb.Websocket();
-  /* Init websocket connection */
-  websocket.init('socket');
-  
-  /* Connection handler */
-  $(document).on('message', function(event, data) {
-    timeline.addMessage(data);
+  websocket.connect('socket');
+
+  document.addEventListener('websocket.message', function(event) {
+    var detail = event.detail;
+
+    if (['message'].indexOf(detail.type) != -1) {
+      timeline.addMessage(detail);
+    }
   });
 }());

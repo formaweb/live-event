@@ -1,0 +1,43 @@
+var websocket = (function () {
+  'use strict';
+
+  //--- Private Methods ---//
+  var socket;
+
+  //--- Private Methods ---//
+  function connect(path) {
+    socket = new WebSocket('ws://' + location.host + '/' + path);
+
+    socket.onopen = function () {
+      var event = new CustomEvent('websocket.status', { detail: { status: true } });
+      document.dispatchEvent(event);
+      console.info('Connection started.');
+    };
+
+    socket.onclose = function () {
+      var event = new CustomEvent('websocket.status', { detail: { status: false } });
+      document.dispatchEvent(event);
+      console.info('Connection closed.');
+
+      setTimeout(function () {
+        connect(path);
+        console.log('Reconnecting...');
+      }, 1000);
+    };
+
+    socket.onmessage = function (response) {
+      var detail, event;
+      detail = JSON.parse(response.data);
+      event = new CustomEvent('websocket.message', { detail: detail });
+      document.dispatchEvent(event);
+    };
+  }
+
+  //--- Public Methods ---//
+  return {
+    connect: connect,
+    send: function (data) {
+      socket.send(JSON.stringify(data));
+    }
+  };
+}());

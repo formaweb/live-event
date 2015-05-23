@@ -1,17 +1,29 @@
 var timeline = (function () {
   'use strict';
 
-  //--- Private Methods ---//
+  //--- Private Variables ---//
   var body, toggleClass, messagesClass, messageTemplateClass;
   toggleClass = 'is-timeline-opened';
   messagesClass = 'js-messages';
-  messageTemplateClass = 'message-template';
+  messageTemplateClass = 'js-message-template';
 
 
   //--- Private Methods ---//
-  function messageTemplate() {
-    
+  function messageTemplate(data) {
+    var template, message, content, meta;
+
+    template = document.getElementsByClassName(messageTemplateClass)[0].content;
+    message = template.querySelector('.message');
+    content = template.querySelector('.content');
+    meta = template.querySelector('.meta');
+
+    message.classList.add('message-' + data.id);
+    content.textContent = data.message;
+    meta.textContent = data.user_name;
+
+    return template;
   }
+
 
   //--- Public Methods ---//
   return {
@@ -22,13 +34,11 @@ var timeline = (function () {
       document.body.classList.remove(toggleClass);
     },
     addMessage: function (data) {
-      var template, collection;
-      template = messageTemplate(data);
-      collection = ;
-      collection.appendChild(template);
+      var template = messageTemplate(data);
+      document.getElementsByClassName(messagesClass)[0].appendChild(template);
     },
     removeMessage: function (id) {
-      document.getElementById('message-' + id).classList.add('removed');
+      document.getElementsByClassName('message-' + id)[0].classList.add('removed');
     }
   };
 }());
