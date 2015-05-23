@@ -47,3 +47,10 @@ bower.json
 
 # Ignore pow environment settings
 .powenv
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+/test
+/public/uploads
+/public/system

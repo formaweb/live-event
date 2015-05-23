@@ -1,10 +1,10 @@
 class Message < ActiveRecord::Base
+  mount_uploader :image, MessageImageUploader
+  
   belongs_to :user
   
   validates_presence_of :message, if: 'image.blank?'
   validates_presence_of :user_id, :event_id
-  
-  mount_uploader :image, MessageImageUploader
   
   before_destroy do
     Redis.new.publish('event_'+self.event_id.to_s, {'type' => 'delete', 'id' => self.id}.to_json)
