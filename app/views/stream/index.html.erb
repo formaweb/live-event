@@ -16,7 +16,7 @@
 </section>
 
 <section class="ui timeline">
-  <article class="collection messages">
+  <article class="collection messages js-messages">
     <% @messages.each do |message| %>
     <%= render partial: 'message', locals: {message: message} %>
     <% end %>

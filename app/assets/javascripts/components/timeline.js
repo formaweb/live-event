@@ -2,8 +2,9 @@ var timeline = (function () {
   'use strict';
 
   //--- Private Methods ---//
-  var body, toggleClass, messageTemplateClass;
+  var body, toggleClass, messagesClass, messageTemplateClass;
   toggleClass = 'is-timeline-opened';
+  messagesClass = 'js-messages';
   messageTemplateClass = 'message-template';
 
 
@@ -20,8 +21,11 @@ var timeline = (function () {
     hideTimeline: function () {
       document.body.classList.remove(toggleClass);
     },
-    addMessage: function () {
-      
+    addMessage: function (data) {
+      var template, collection;
+      template = messageTemplate(data);
+      collection = ;
+      collection.appendChild(template);
     },
     removeMessage: function (id) {
       document.getElementById('message-' + id).classList.add('removed');
