@@ -43,3 +43,9 @@ group :development, :test do
   gem 'spring'
 end
 
+# websockets
+gem 'puma'
+gem 'tubesock'
+gem 'redis-rails'
+
+gem 'devise'
