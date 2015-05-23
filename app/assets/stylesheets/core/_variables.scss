@@ -1,0 +1,95 @@
+//******************//
+//     Settings     //
+//******************//
+
+
+//-----------------//
+//   Breakpoints   //
+//-----------------//
+$phone-breakpoint   : 320px;
+$tablet-breakpoint  : 768px;
+$desktop-breakpoint : 992px;
+
+//--- Largest Breakpoints ---//
+$largest-phone-screen : $tablet-breakpoint - 1px;
+$largest-tablet-screen: $desktop-breakpoint - 1px;
+
+//--- Minimum Page Width ---//
+$minimum-page-width: $phone-breakpoint;
+
+
+//-----------//
+//   Fonts   //
+//-----------//
+$font-smoothing: antialiased;
+
+//--- Page ---//
+$font-size:   16px;
+$font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-weight: normal;
+$line-height: 1.1;
+
+//--- Header ---//
+$header-font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$header-font-weight: 300;
+$header-line-height: 1.3;
+
+
+//------------//
+//   Colors   //
+//------------//
+
+//--- Cool ---//
+$aqua:  #7fdbff;
+$blue:  #0074d9;
+$navy:  #001f3f;
+$teal:  #39cccc;
+$green: #2ecc40;
+$olive: #3d9970;
+$lime:  #01ff70;
+
+//--- Warn ---//
+$yellow:  #ffdc00;
+$orange:  #ff851b;
+$red:     #ff4136;
+$fuchsia: #f012be;
+$purple:  #b10dc9;
+$maroon:  #85144b;
+
+//--- Gray Scale ---//
+$white:  #fff;
+$silver: #ddd;
+$gray:   #aaa;
+$black:  #000;
+
+//--- Emotive ---//
+$positive-color: $green;
+$negative-color: $red;
+$info-color:     $blue;
+$warning-color:  $yellow;
+
+//--- Brands ---//
+$facebook-color:    #3b579d;
+$google-plus-color: #d34836;
+$instagram-color:   #49769c;
+$twitter-color:     #4092cc;
+$youtube-color:     #cc181e;
+
+//--- Theme ---//
+$primary-color:   $blue;
+$secondary-color: $teal;
+
+//--- Page ---//
+$background-color: $white;
+$text-color:       rgba($black, 0.8);
+
+//--- Highlighting ---//
+$highlight-background: $primary-color;
+$highlight-color:      $white;
+
+
+//-------------//
+//   Borders   //
+//-------------//
+$radius:          5px;
+$circular-radius: 500rem;

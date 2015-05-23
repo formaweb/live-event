@@ -1,0 +1,30 @@
+.section.stream {
+  background: $black;
+
+  &.is-timeline-opened {
+    .ui.video { width: 70%; }
+    .ui.timeline { right: 0; }
+
+    .video-image { opacity: 0; }
+    .timeline-image { opacity: 1; }
+  }
+
+  .ui.video,
+  .ui.timeline {
+    height: 100%;
+  }
+
+  .ui.video {
+    transition: width 250ms 50ms;
+    width: 100%;
+  }
+
+  .ui.timeline {
+    position: absolute;
+    right: -30%;
+    top: 0;
+    transition: right 500ms;
+    width: 30%;
+  }
+
+}

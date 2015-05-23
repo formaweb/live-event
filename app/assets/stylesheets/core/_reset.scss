@@ -1,0 +1,46 @@
+:root{
+  box-sizing: border-box;
+  cursor: default;
+  font: 16px/1.5 sans-serif;
+  text-rendering: optimizeLegibility;
+
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%
+}
+
+*,
+::after,
+::before {
+  border-style: solid;
+  border-width: 0;
+  box-sizing: inherit;
+}
+
+* {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding:0;
+}
+
+::after,
+::before {
+  text-decoration: inherit;
+  vertical-align: inherit;
+}
+
+[hidden],
+audio:not([controls]),
+template {
+  display: none;
+}
+
+a { text-decoration: none; }
+
+textarea { resize: vertical; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
