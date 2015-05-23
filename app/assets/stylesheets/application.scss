@@ -1,0 +1,38 @@
+//*********************//
+//     Application     //
+//*********************//
+$layout: 'application';
+
+
+//------------------------//
+//   Mixins & Variables   //
+//------------------------//
+@import 'core/variables';
+@import 'core/mixins';
+
+
+//----------//
+//   Core   //
+//----------//
+//@import 'core/keyframes';
+@import 'core/reset';
+@import 'core/core';
+
+
+//----------------//
+//   Components   //
+//----------------//
+@import 'components/timeline';
+@import 'components/video';
+
+
+//-----------------//
+//   Collections   //
+//-----------------//
+@import 'collections/messages';
+
+
+//-------------//
+//   Layouts   //
+//-------------//
+@import 'layouts/application/**/*';

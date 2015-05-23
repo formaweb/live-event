@@ -1,0 +1,42 @@
+//**************//
+//     Core     //
+//**************//
+html, body {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  background: $background-color;
+  color: $text-color;
+  font: $font-weight $font-size/$line-height $font-family;
+  font-smoothing: $font-smoothing;
+  min-width: $minimum-page-width;
+}
+
+
+//-------------//
+//   Headers   //
+//-------------//
+h1, h2, h3, h4, h5, h6 {
+  font: $header-font-weight 1em/$header-line-height $header-font-family;
+}
+
+
+//----------//
+//   Text   //
+//----------//
+p {
+  margin: 1em 0;
+  &:first-child { margin-top: 0; }
+  &:last-child { margin-bottom: 0; }
+}
+
+
+//------------------//
+//   Highlighting   //
+//------------------//
+::selection {
+  background-color: $highlight-background;
+  color: $highlight-color;
+}

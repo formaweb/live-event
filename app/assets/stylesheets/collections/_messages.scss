@@ -1,0 +1,24 @@
+.collection.messages {
+  height: 100%;
+  padding: 20px;
+
+  .message {
+    margin-bottom: 30px;
+
+    > .content {
+      background: $green;
+      border-radius: $radius;
+      font-size: 125%;
+      font-weight: 300;
+      color: $white;
+      padding: 10px 14px;
+      position: relative;
+    }
+
+    > .meta {
+      color: darken($gray, 25%);
+      margin-top: 10px;
+    }
+  }
+
+}
