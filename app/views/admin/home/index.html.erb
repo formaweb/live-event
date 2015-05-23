@@ -1,8 +1,15 @@
+<div class="video" style="position: fixed; right: 0;">
+  <% unless @event.video_url.blank? %>
+  <iframe data-video-id="<%= @event.get_youtube_video_id %>" width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
+  <% end %>
+</div>
+
 <div class="messages">
   <% @messages.each do |message| %>
   <div class="message" id="message_<%= message.id %>">
     <%= image_tag message.user.photo(nil), width: '20', style: 'border-radius: 100%;' %> 
     <%= message.user.name %>: <%= message.message %> 
+    <% if message.image? %><%= image_tag message.image.content, height: 300 %><% end %>
     <% if current_user.id == message.user.id %>
     <%= link_to 'apagar', '#', :'data-id' => message.id, class: 'delete-message' %>
     <% end %>
@@ -26,10 +33,15 @@
 
 <hr>
 
-<%= form_tag '#', id: 'message_form' do %>
+<%= form_tag '#', id: 'message_form', multipart: true do %>
   
   <%= label_tag 'message', 'Mensagem:' %><br>
   <%= text_area_tag 'message' %>
+  
+  <br>
+  
+  <%= label_tag 'image', 'Imagem:' %><br>
+  <%= file_field_tag 'image' %>
   
   <br>
   

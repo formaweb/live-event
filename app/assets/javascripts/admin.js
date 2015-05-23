@@ -11,6 +11,11 @@ $(document).ready(function(){
   /* Init websocket connection */
   websocket.init('admin/socket');
   
+  /* Connection handler */
+  $(document).on('connection', function(e, data){
+    $('.connection').css('background-color', (data.status ? 'green' : 'red'));
+  });
+  
   /* Message from server handler */
   $(document).on('message', function(e, data){
     
@@ -30,6 +35,13 @@ $(document).ready(function(){
       case 'event':
         $('#video_url').val(data.video_url);
         $('#event_name').val(data.event_name);
+        if(data.video_url == ''){
+          $('.video').html('').attr('data-video-id', '');
+        } else {
+          if($('.video').attr('data-video-id') != data.video_id){
+            $('.video').html('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+data.video_id+'" frameborder="0" allowfullscreen></iframe>').attr('data-video-id', data.video_id);
+          }
+        }
         console.log('event', data);
         break;
       
@@ -38,7 +50,7 @@ $(document).ready(function(){
         // Remove typing if user was typing
         if($('.messages .typing#'+data.user_id).length > 0) $('.messages .typing#'+data.user_id).remove();
         // Show the message
-        $('.messages').append('<div class="message" id="message_'+data.id+'"><img src="'+data.user_photo+'" width="20" style="border-radius: 100%;"> '+data.user_name+': '+data.message+(data.user_id == user_id ? ' <a href="#" class="delete-message" data-id="'+data.id+'">apagar</a>' : '')+'</div>');
+        $('.messages').append('<div class="message" id="message_'+data.id+'"><img src="'+data.user_photo+'" width="20" style="border-radius: 100%;"> '+data.user_name+': '+data.message+(data.image != '' ? ' <img src="'+data.image+'" height="300">' : '')+(data.user_id == user_id ? ' <a href="#" class="delete-message" data-id="'+data.id+'">apagar</a>' : '')+'</div>');
         break;
       
       /* User is typing */
@@ -110,12 +122,35 @@ $(document).ready(function(){
   /* Send message to server */
   $('#message_form').on('submit', function(){
     
-    websocket.send({
-      message: $('#message').val(),
-      type: 'message'
-    });
+    if($('#image').val() == ''){
+      websocket.send({
+        message: $('#message').val(),
+        type: 'message'
+      });
     
-    $('#message').val('').focus();
+      $('#message').val('').focus();
+    } else {
+      var form = $(this);
+      var form_data = form.serialize();
+      var submit_button = form.find('button');
+      
+      $.ajax({
+        url: '/admin/home.json',
+        method: 'post',
+        dataType: "json",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          submit_button.attr('disabled');
+        },
+        success: function(data){
+          submit_button.removeAttr('disabled');
+          $('#message_form')[0].reset();
+        }
+      });
+    }
     
     return false;
   });

@@ -19,9 +19,7 @@ class Admin::SocketController < ApplicationController
         case message['type']
         when 'message'
           message = current_user.messages.new(event_id: 1, message: message['message'])
-          if message.save
-            Redis.new.publish('event_1', {'type' => 'message', 'id' => message.id, 'user_name' => current_user.name, 'user_id' => current_user.udid, 'message' => message.message, 'created_at' => message.created_at.to_i, 'user_photo' => current_user.photo(nil)}.to_json)
-          else
+          if !message.save
             Redis.new.publish('event_1', {'type' => 'error', 'errors' => message.errors.full_messages, 'user_id' => current_user.udid}.to_json)
           end
         when 'typing'
@@ -30,14 +28,13 @@ class Admin::SocketController < ApplicationController
           if current_user.can_edit_event
             event = Event.last
             if event.update_attributes({video_url: message['video_url'], name: message['event_name']})
-              Redis.new.publish('event_1', {'type' => 'event', 'video_url' => event.video_url, 'event_name' => event.name, 'user_id' => current_user.udid, 'user_name' => current_user.name}.to_json)
+              Redis.new.publish('event_1', {'type' => 'event', 'video_url' => event.video_url, 'video_id' => event.get_youtube_video_id, 'event_name' => event.name, 'user_id' => current_user.udid, 'user_name' => current_user.name}.to_json)
             else
               Redis.new.publish('event_1', {'type' => 'error', 'errors' => event.errors.full_messages, 'user_id' => current_user.udid}.to_json)
             end
           end
         when 'delete'
-          target_message = current_user.messages.find(message['id'])
-          puts target_message.inspect
+          target_message = current_user.messages.where(id: message['id']).first
           if target_message.nil?
             Redis.new.publish('event_1', {'type' => 'error', 'errors' => ['Ocorreu um erro ao deletar.'], 'user_id' => current_user.udid}.to_json)
           else

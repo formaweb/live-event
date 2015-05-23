@@ -6,7 +6,7 @@
   <title>Painel Administrativo</title>
 </head>
 <body data-user-id="<%= current_user.udid %>">
-  <div class="user">Olá <%= current_user.name %> - <%= link_to 'Sair', destroy_user_session_path, method: :delete, :'data-confirm' => 'Tem certeza que deseja sair?' %><hr></div>
+  <div class="user"> <span class="connection" style="width: 10px; height: 10px; background-color: silver; display: inline-block; border-radius: 100px;"></span> Olá <%= current_user.name %> - <%= link_to 'Sair', destroy_user_session_path, method: :delete, :'data-confirm' => 'Tem certeza que deseja sair?' %><hr></div>
   <%= yield %>
 </body>
 </html>

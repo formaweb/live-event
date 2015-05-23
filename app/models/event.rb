@@ -3,6 +3,19 @@ class Event < ActiveRecord::Base
   validates_presence_of :name
   validate :youtube_video_url
   
+  def get_youtube_video_id
+    return '' if self.video_url.blank?
+    
+    youtube_id = ''
+    if self.video_url[/youtu\.be\/([^\?]*)/]
+      youtube_id = $1
+    else
+      self.video_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
+      youtube_id = $5
+    end
+    return youtube_id
+  end
+  
   private
   def verify_video_http
     self.video_url = "http://" + self.video_url if self.video_url !~ /^[http:\/\/|https:\/\/]/

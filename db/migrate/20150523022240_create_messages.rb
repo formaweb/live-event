@@ -4,6 +4,7 @@ class CreateMessages < ActiveRecord::Migration
       t.integer :event_id
       t.integer :user_id
       t.text :message
+      t.string :image
 
       t.timestamps null: false
     end

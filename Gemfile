@@ -43,9 +43,14 @@ group :development, :test do
   gem 'spring'
 end
 
-# websockets
+# Websockets
 gem 'puma'
 gem 'tubesock'
 gem 'redis-rails'
 
+# Admin
 gem 'devise'
+
+# Upload and Images
+gem 'carrierwave'
+gem 'mini_magick'
