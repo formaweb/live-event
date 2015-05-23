@@ -1,4 +1,4 @@
 <div class="message">
-  <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae lacus ante.</div>
-  <aside class="meta">Caio Tarifa</aside>
+  <div class="content"><%= defined?(message) ? (message.image? ? image_tag(message.image.content) : '')+message.message : '' %></div>
+  <aside class="meta"><%= defined?(message) ? message.user.name : '' %></aside>
 </div>
