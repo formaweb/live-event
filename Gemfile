@@ -54,3 +54,9 @@ gem 'devise'
 # Upload and Images
 gem 'carrierwave'
 gem 'mini_magick'
+
+# Deploy
+gem 'capistrano', '2.15.4', group: :development
+
+# Console
+gem 'rb-readline', group: :production

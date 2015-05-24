@@ -51,4 +51,4 @@ production:
   <<: *default
   database: live-event_production
   username: live-event
-  password: <%= ENV['LIVE-EVENT_DATABASE_PASSWORD'] %>
+  password: <%= ENV['LIVE_EVENT_DATABASE_PASSWORD'] %>
