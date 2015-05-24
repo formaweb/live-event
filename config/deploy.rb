@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 
 set :application, "live-event"
-set :repository,  "git@github.com:formaweb/live-event.git"
+set :repository,  "https://github.com/formaweb/live-event.git"
 set :user, "root"
 set :use_sudo, false
 set :deploy_to, "/home/live-event/application"
