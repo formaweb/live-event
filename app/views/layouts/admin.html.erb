@@ -1,12 +1,26 @@
 <!doctype html>
 <html>
 <head>
+  <meta charset="utf-8">
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag 'admin' %>  
-  <title>Painel Administrativo</title>
+
+  <title>Live Event Dashboard</title>
+
+  <%= stylesheet_link_tag    'admin', media: 'all' %>
+  <%= javascript_include_tag 'admin' %>
 </head>
-<body data-user-id="<%= current_user.udid %>">
-  <div class="user"> <span class="connection" style="width: 10px; height: 10px; background-color: silver; display: inline-block; border-radius: 100px;"></span> Olá <%= current_user.name %> - <%= link_to 'Sair', destroy_user_session_path, method: :delete, :'data-confirm' => 'Tem certeza que deseja sair?' %><hr></div>
-  <%= yield %>
+<body class="section <%= section_label %>" data-user-id="<%= current_user.udid %>">
+<header role="banner" class="layout header">
+  <h1 class="brand"><%= @event.name %></h1>
+  <div class="user">
+    Olá <%= current_user.name %>
+    <%= link_to 'Sair', destroy_user_session_path, method: :delete, :'data-confirm' => 'Tem certeza que deseja sair?' %>
+  </div>
+  <div class="status"></div>
+</header>
+
+<main role="main" class="layout main">
+<%= yield %>
+</main>
 </body>
 </html>

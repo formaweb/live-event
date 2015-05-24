@@ -1,0 +1,18 @@
+.layout.header {
+  background: $white;
+  border-bottom: 1px solid $silver;
+  box-shadow: 0 1px 10px rgba($gray, 0.25);
+  padding: 20px;
+
+  @include clearfix;
+
+  .brand {
+    float: left;
+    font-size: 1.8em;
+  }
+
+  .user,
+  .status {
+    float: right;
+  }
+}

@@ -6,11 +6,13 @@
 
   websocket.connect('socket');
 
-  document.addEventListener('websocket.message', function(event) {
+  document.addEventListener('websocket.message', function (event) {
     var detail = event.detail;
 
-    if (['message'].indexOf(detail.type) != -1) {
+    if (detail.type === 'message') {
       timeline.addMessage(detail);
+    } else if (detail.type === 'delete') {
+      timeline.removeMessage(detail.id);
     }
   });
 }());

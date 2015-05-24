@@ -1,6 +1,6 @@
-//*********************//
-//     Application     //
-//*********************//
+//***************//
+//     Admin     //
+//***************//
 
 
 //------------------------//
@@ -21,17 +21,14 @@
 //----------------//
 //   Components   //
 //----------------//
-@import 'components/timeline';
-@import 'components/video';
 
 
 //-----------------//
 //   Collections   //
 //-----------------//
-@import 'collections/messages';
 
 
 //-------------//
 //   Layouts   //
 //-------------//
-@import 'layouts/application/**/*';
+@import 'layouts/admin/**/*';

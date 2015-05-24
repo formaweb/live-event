@@ -1,55 +1,50 @@
-<div class="video" style="position: fixed; right: 0;">
-  <% unless @event.video_url.blank? %>
-  <iframe data-video-id="<%= @event.get_youtube_video_id %>" width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
-  <% end %>
-</div>
+<aside role="complementary" class="collection users">
+  1
+</aside>
 
-<div class="messages">
-  <% @messages.each do |message| %>
-  <div class="message" id="message_<%= message.id %>">
-    <%= image_tag message.user.photo(nil), width: '20', style: 'border-radius: 100%;' %> 
-    <%= message.user.name %>: <%= message.message %> 
-    <% if message.image? %><%= image_tag message.image.content, height: 300 %><% end %>
-    <% if current_user.id == message.user.id %>
-    <%= link_to 'apagar', '#', :'data-id' => message.id, class: 'delete-message' %>
+<div class="collection timeline">
+  <div class="messages">
+    <% @messages.each do |message| %>
+    <div class="message" id="message_<%= message.id %>">
+      <%= image_tag message.user.photo(nil), width: '20', style: 'border-radius: 100%;' %> 
+      <%= message.user.name %>: <%= message.message %> 
+      <% if message.image? %><%= image_tag message.image.content, height: 300 %><% end %>
+      <% if current_user.id == message.user.id %>
+      <%= link_to 'apagar', '#', :'data-id' => message.id, class: 'delete-message' %>
+      <% end %>
+    </div>
     <% end %>
   </div>
+
+  <%= form_tag '?', id: 'message_form', class: 'send', multipart: true do %>
+    <%= text_area_tag 'message', '', placeholder: 'Digite sua mensagem...' %>
+
+    <div class="actions">
+      <%= check_box_tag 'typing', 'typing', true %>
+      <%= label_tag 'typing', 'Mostrar aos administradores o que estou digitando' %>
+      <%= file_field_tag 'image' %>
+      <button type="submit">Enviar</button>
+    </div>
   <% end %>
 </div>
 
-<div class="controls" style="position: fixed; bottom: 0;">
-<% if current_user.can_edit_event %>
-<%= form_tag '#', id: 'event_form' do %>
-  
-  <%= label_tag 'event_name', 'Nome do evento:' %>
-  <%= text_field_tag 'event_name', @event.name %>
-  
-  <%= label_tag 'video_url', 'Link do Vídeo:' %>
-  <%= text_field_tag 'video_url', @event.video_url %>
-  
-  <button>Salvar</button>
-<% end %>
-<% end %>
+<aside role="complementary" class="collection sidebar">
+  <div class="video">
+    <% unless @event.video_url.blank? %>
+    <iframe data-video-id="<%= @event.get_youtube_video_id %>" width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
+    <% end %>
+  </div>
 
-<hr>
+  <% if current_user.can_edit_event %>
+  <%= form_tag '?', id: 'event_form' do %>
 
-<%= form_tag '#', id: 'message_form', multipart: true do %>
-  
-  <%= label_tag 'message', 'Mensagem:' %><br>
-  <%= text_area_tag 'message' %>
-  
-  <br>
-  
-  <%= label_tag 'image', 'Imagem:' %><br>
-  <%= file_field_tag 'image' %>
-  
-  <br>
-  
-  <%= check_box_tag 'typing', 'typing', true %>
-  <%= label_tag 'typing', 'Mostrar aos administradores o que estou digitando' %>
-  
-  <br>
-  
-  <button>Enviar</button>
-<% end %>
-</div>
+    <%= label_tag 'event_name', 'Nome do evento:' %>
+    <%= text_field_tag 'event_name', @event.name %>
+
+    <%= label_tag 'video_url', 'Link do Vídeo:' %>
+    <%= text_field_tag 'video_url', @event.video_url %>
+
+    <button type="submit">Salvar</button>
+  <% end %>
+  <% end %>
+</aside>

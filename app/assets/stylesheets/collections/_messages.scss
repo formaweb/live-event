@@ -3,7 +3,13 @@
 
   .message {
     margin-bottom: 30px;
+    transition: opacity 1s;
+
     &:last-child { margin-bottom: 0; }
+
+    &.removed {
+      display: none;
+    }
 
     > .content {
       background: $green;
@@ -14,6 +20,13 @@
       color: $white;
       padding: 10px 14px;
       position: relative;
+
+      img {
+        border-radius: $radius;
+        display: block;
+        margin: 4px 0;
+        width: 100%;
+      }
     }
 
     > .meta {

@@ -10,15 +10,25 @@ var timeline = (function () {
 
   //--- Private Methods ---//
   function messageTemplate(data) {
-    var template, message, content, meta;
+    var template, message, content, contentImage, meta;
 
     template = document.getElementsByClassName(messageTemplateClass)[0].content;
+    template = template.cloneNode(true);
+
     message = template.querySelector('.message');
     content = template.querySelector('.content');
     meta = template.querySelector('.meta');
 
     message.classList.add('message-' + data.id);
-    content.textContent = data.message;
+
+    if (data.image) {
+      contentImage = document.createElement('img');
+      contentImage.src = data.image;
+      content.appendChild(contentImage);
+    }
+
+    content.appendChild(document.createTextNode(data.message));
+
     meta.textContent = data.user_name;
 
     return template;
@@ -38,7 +48,7 @@ var timeline = (function () {
       document.getElementsByClassName(messagesClass)[0].appendChild(template);
     },
     removeMessage: function (id) {
-      document.getElementsByClassName('message-' + id)[0].classList.add('removed');
+      document.querySelector('.message-' + id).classList.add('removed');
     }
   };
 }());

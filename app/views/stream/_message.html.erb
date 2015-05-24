@@ -1,4 +1,4 @@
-<div class="message">
-  <div class="content"><%= defined?(message) ? (message.image? ? image_tag(message.image.content) : '')+message.message : '' %></div>
+<div class="message<%= defined?(message) ? ' message-' + message.id.to_s : '' %>">
+  <div class="content"><%= defined?(message) ? (message.image? ? image_tag(message.image.content) : '') + message.message : '' %></div>
   <aside class="meta"><%= defined?(message) ? message.user.name : '' %></aside>
 </div>
