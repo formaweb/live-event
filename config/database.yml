@@ -48,7 +48,10 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  host: 127.0.0.1
   database: live-event_production
   username: live-event
-  password: <%= ENV['LIVE-EVENT_DATABASE_PASSWORD'] %>
+  password: <%= ENV['LIVE_EVENT_DATABASE_PASSWORD'] %>
