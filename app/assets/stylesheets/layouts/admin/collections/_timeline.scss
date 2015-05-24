@@ -2,18 +2,61 @@
   position: relative;
 
   .messages {
-    height: 100%;
+    height: calc(100% - 100px);
     overflow-y: scroll;
-    padding: 20px 20px 100px;
+    padding: 20px;
     position: absolute;
     top: 0;
   }
 
+  .message {
+    border: 1px solid $silver;
+    border-radius: $radius;
+    box-shadow: 1px 1px 3px rgba($gray, 0.25);
+    margin-bottom: 20px;
+    padding: 6px 8px;
+
+    &:last-child { margin-bottom: 2px; }
+
+    .meta {
+      border-bottom: 1px dotted $silver;
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+    }
+
+    .content {
+      font-size: 1.3em;
+      font-weight: 300;
+
+      @include clearfix;
+
+      img {
+        border-radius: 3px;
+        float: left;
+        margin-right: 5px;
+        width: 50%;
+      }
+    }
+  }
+
   .send {
-    background: rgba($white, 0.9);
+    background: lighten($silver, 5%);
+    border-top: 1px solid $silver;
     bottom: 0;
+    height: 100px;
+    padding: 10px;
     position: absolute;
     width: 100%;
+
+    textarea {
+      border: 1px solid rgba($gray, 0.5);
+      outline: 0;
+      padding: 5px;
+      transition: border-color 500ms;
+      width: 100%;
+
+      &:focus { border-color: $primary-color; }
+    }
   }
 
 }

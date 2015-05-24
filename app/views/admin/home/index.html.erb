@@ -1,23 +1,33 @@
 <aside role="complementary" class="collection users">
-  1
+  <% ['Caio Tarifa', 'Hugo Demiglio'].each do |user| %>
+  <div class="user">
+    <div class="meta"><%= user %></div>
+    <div class="content away">Nenhuma atividade identificada...</div>
+  </div>
+  <% end %>
 </aside>
 
 <div class="collection timeline">
   <div class="messages">
     <% @messages.each do |message| %>
     <div class="message" id="message_<%= message.id %>">
+      <div class="meta">
       <%= image_tag message.user.photo(nil), width: '20', style: 'border-radius: 100%;' %> 
-      <%= message.user.name %>: <%= message.message %> 
-      <% if message.image? %><%= image_tag message.image.content, height: 300 %><% end %>
+      <%= message.user.name %>
       <% if current_user.id == message.user.id %>
-      <%= link_to 'apagar', '#', :'data-id' => message.id, class: 'delete-message' %>
+        <%= link_to 'apagar', '#', :'data-id' => message.id, class: 'delete-message' %>
       <% end %>
+      </div>
+      <div class="content">
+        <% if message.image? %><%= image_tag message.image.content %><% end %>
+        <%= message.message %>
+      </div>
     </div>
     <% end %>
   </div>
 
   <%= form_tag '?', id: 'message_form', class: 'send', multipart: true do %>
-    <%= text_area_tag 'message', '', placeholder: 'Digite sua mensagem...' %>
+  <%= text_area_tag 'message', '', placeholder: 'Digite sua mensagem...', autofocus: true %>
 
     <div class="actions">
       <%= check_box_tag 'typing', 'typing', true %>
