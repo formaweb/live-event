@@ -1,13 +1,14 @@
 .collection.messages {
-  height: 100%;
   padding: 20px;
 
   .message {
     margin-bottom: 30px;
+    &:last-child { margin-bottom: 0; }
 
     > .content {
       background: $green;
       border-radius: $radius;
+      display: inline-block;
       font-size: 125%;
       font-weight: 300;
       color: $white;

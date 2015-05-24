@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150523045056) do
     t.integer  "event_id",   limit: 4
     t.integer  "user_id",    limit: 4
     t.text     "message",    limit: 65535
+    t.string   "image",      limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end

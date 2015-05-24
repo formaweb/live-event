@@ -1,7 +1,16 @@
-// setTimeout(function () {
-//   document.body.classList.add('is-timeline-opened');
-// }, 7500);
-//
-// setTimeout(function () {
-//   document.body.classList.remove('is-timeline-opened');
-// }, 15000);
+//= require 'components/websocket'
+//= require 'components/timeline'
+
+(function () {
+  'use strict';
+
+  websocket.connect('socket');
+
+  document.addEventListener('websocket.message', function(event) {
+    var detail = event.detail;
+
+    if (['message'].indexOf(detail.type) != -1) {
+      timeline.addMessage(detail);
+    }
+  });
+}());
