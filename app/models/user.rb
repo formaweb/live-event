@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   
   has_many :messages, dependent: :destroy
   
+  after_commit on: :update do
+    Redis.new.publish('event_1', {'type' => 'user', 'user_id' => self.udid, 'user_name' => self.name, 'online' => self.online, 'user_photo' => self.photo(nil)}.to_json)
+  end
+  
   def udid
     self.name.parameterize
   end

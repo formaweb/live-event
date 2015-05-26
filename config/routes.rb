@@ -6,9 +6,15 @@ Rails.application.routes.draw do
   resources :socket
   
   namespace :admin do
-    root 'home#index'
+    root 'dashboard#index'
     
-    resources :home
+    resources :dashboard do
+      collection do
+        post :event
+      end
+    end
+    
+    resources :messages
     resources :socket
   end
 end

@@ -29,7 +29,7 @@ namespace :deploy do
     run "chmod -R 777 #{File.join(release_path, 'tmp')}"
     
     # Kill Puma
-    # run "kill `cat #{File.join(shared_path, 'pids', 'puma.pid')}`"
+    run "kill `cat #{File.join(shared_path, 'pids', 'puma.pid')}`"
     
     # Run migrations and database seed
     run "cd #{File.join(release_path)} && bundle exec rake db:migrate RAILS_ENV=production"

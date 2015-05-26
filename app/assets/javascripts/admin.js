@@ -19,6 +19,8 @@ $(document).ready(function(){
   /* Message from server handler */
   $(document).on('message', function(e, data){
     
+    console.log('message', data);
+    
     switch(data.type) {
       
       /* New tweet */
@@ -26,15 +28,20 @@ $(document).ready(function(){
         console.log('tweet', data);
         break;
       
-      /* New image */
-      case 'image':
-        console.log('image', data);
+      /* User activity */
+      case 'user':
+        if($('.users .user.user_'+data.user_id).length > 0){
+          if(!data.online) $('.users .user.user_'+data.user_id).remove();
+        } else {
+          $('.collection.users').append('<div class="user user_'+data.user_id+'"><div class="meta">'+data.user_name+'</div><div class="content away">Nenhuma atividade identificada.</div></div>');
+        }
         break;
       
       /* Event configuration changed */
       case 'event':
-        $('#video_url').val(data.video_url);
-        $('#event_name').val(data.event_name);
+        $('#video_url').val(data.video_url).attr('value', data.video_url);
+        $('#event_name').val(data.event_name).attr('value', data.event_name);
+        $('.brand').text(data.event_name);
         if(data.video_url == ''){
           $('.video').html('').attr('data-video-id', '');
         } else {
@@ -42,7 +49,6 @@ $(document).ready(function(){
             $('.video').html('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+data.video_id+'" frameborder="0" allowfullscreen></iframe>').attr('data-video-id', data.video_id);
           }
         }
-        console.log('event', data);
         break;
       
       /* New message */
@@ -57,11 +63,11 @@ $(document).ready(function(){
       case 'typing':
         if(data.user_id == user_id) return;
         
-        if($('.messages .typing#'+data.user_id).length > 0){
+        if($('.users .user.user_'+data.user_id).length > 0){
           if(data.message.length == 0) {
-            $('.messages .typing#'+data.user_id).remove();
+            $('.users .user.user_'+data.user_id+' .content').text('Nenhuma atividade identificada.');
           } else {
-            $('.messages .typing#'+data.user_id+' .content').html(data.message);
+            $('.users .user.user_'+data.user_id+' .content').html('<strong>Esta digitando:</strong> '+data.message);
           }
         } else {
           if(data.message.length > 0) {
@@ -119,51 +125,42 @@ $(document).ready(function(){
     
   });
   
-  /* Send message to server */
-  $('#message_form').on('submit', function(){
+  /* Send form to server */
+  $('form').on('submit', function(){
+    var form = $(this);
+    var form_data = form.serialize();
+    var submit_button = form.find('button');
     
-    if($('#image').val() == ''){
-      websocket.send({
-        message: $('#message').val(),
-        type: 'message'
-      });
-    
-      $('#message').val('').focus();
-    } else {
-      var form = $(this);
-      var form_data = form.serialize();
-      var submit_button = form.find('button');
-      
-      $.ajax({
-        url: '/admin/home.json',
-        method: 'post',
-        dataType: "json",
-        data: new FormData(this),
-        processData: false,
-        contentType: false,
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-          submit_button.attr('disabled');
-        },
-        success: function(data){
-          submit_button.removeAttr('disabled');
-          $('#message_form')[0].reset();
-        }
-      });
-    }
+    $.ajax({
+      url: form.attr('action'),
+      method: 'post',
+      dataType: 'json',
+      data: new FormData(this),
+      processData: false,
+      contentType: false,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        submit_button.attr('disabled');
+      },
+      success: function(data){
+        submit_button.removeAttr('disabled');
+        form[0].reset();
+        $('#message').focus();
+      }
+    });
     
     return false;
   });
   
   /* Send event configurations to server */
-  $('#event_form').on('submit', function(){
-    
-    websocket.send({
-      video_url: $('#video_url').val(),
-      event_name: $('#event_name').val(),
-      type: 'event'
-    });
-    
-    return false;
-  });
+  // $('#event_form').on('submit', function(){
+  //
+  //   websocket.send({
+  //     video_url: $('#video_url').val(),
+  //     event_name: $('#event_name').val(),
+  //     type: 'event'
+  //   });
+  //
+  //   return false;
+  // });
 });

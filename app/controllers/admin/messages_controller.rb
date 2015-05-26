@@ -1,10 +1,5 @@
-class Admin::HomeController < ApplicationController
+class Admin::MessagesController < ApplicationController
   before_action :authenticate_user!
-  
-  def index
-    @event = Event.first
-    @messages = Message.order('id desc').limit(20).reverse
-  end
   
   def create
     message = Message.new({
@@ -17,9 +12,12 @@ class Admin::HomeController < ApplicationController
     if message.save
       render json: {}
     else
-      puts message.errors.full_messages.inspect
       render json: {errors: message.errors.full_messages}, status: 400
     end
+  end
+  
+  def destroy
+    
   end
   
 end

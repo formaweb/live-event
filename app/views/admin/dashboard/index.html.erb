@@ -1,8 +1,8 @@
 <aside role="complementary" class="collection users">
-  <% ['Caio Tarifa', 'Hugo Demiglio'].each do |user| %>
-  <div class="user">
-    <div class="meta"><%= user %></div>
-    <div class="content away">Nenhuma atividade identificada...</div>
+  <% @online_users.each do |user| %>
+  <div class="user user_<%= user.udid %>">
+    <div class="meta"><%= user.name %></div>
+    <div class="content away">Nenhuma atividade identificada.</div>
   </div>
   <% end %>
 </aside>
@@ -26,7 +26,8 @@
     <% end %>
   </div>
 
-  <%= form_tag '?', id: 'message_form', class: 'send', multipart: true do %>
+  <%= form_tag admin_messages_path(format: :json), id: 'message_form', class: 'send', multipart: true do %>
+  <%= hidden_field_tag 'id', '' %>
   <%= text_area_tag 'message', '', placeholder: 'Digite sua mensagem...', autofocus: true %>
 
     <div class="actions">
@@ -45,8 +46,8 @@
     <% end %>
   </div>
 
-  <% if current_user.can_edit_event %>
-  <%= form_tag '?', id: 'event_form' do %>
+  <% if current_user.super_user %>
+  <%= form_tag event_admin_dashboard_index_path(format: :json), id: 'event_form' do %>
 
     <%= label_tag 'event_name', 'Nome do evento:' %>
     <%= text_field_tag 'event_name', @event.name %>

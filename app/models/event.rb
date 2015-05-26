@@ -4,6 +4,10 @@ class Event < ActiveRecord::Base
   validates_presence_of :name
   validate :youtube_video_url
   
+  after_commit on: :update do
+    Redis.new.publish('event_'+self.id.to_s, {'type' => 'event', 'video_url' => self.video_url, 'video_id' => self.get_youtube_video_id, 'event_name' => self.name}.to_json)
+  end
+  
   def get_youtube_video_id
     return '' if self.video_url.blank?
     

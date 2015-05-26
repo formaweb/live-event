@@ -1,0 +1,140 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'thor' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose cache add [ 'thor', null ]
+5 verbose cache add name=undefined spec="thor" args=["thor",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'thor',
+6 verbose parsed url   path: 'thor',
+6 verbose parsed url   href: 'thor' }
+7 silly lockFile 14051859-thor thor
+8 verbose lock thor /Users/hugodemiglio/.npm/14051859-thor.lock
+9 silly lockFile 14051859-thor thor
+10 silly lockFile 14051859-thor thor
+11 verbose addNamed [ 'thor', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 9f1f6737-thor thor@
+14 verbose lock thor@ /Users/hugodemiglio/.npm/9f1f6737-thor.lock
+15 silly addNameRange { name: 'thor', range: '*', hasData: false }
+16 verbose request where is /thor
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 5c760eb8a03ee08c
+19 verbose url raw /thor
+20 verbose url resolving [ 'https://registry.npmjs.org/', './thor' ]
+21 verbose url resolved https://registry.npmjs.org/thor
+22 verbose request where is https://registry.npmjs.org/thor
+23 info trying registry request attempt 1 at 01:27:43
+24 http GET https://registry.npmjs.org/thor
+25 http 200 https://registry.npmjs.org/thor
+26 silly registry.get cb [ 200,
+26 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     etag: '"D3XZMFMEVQK9CROG86MS39BHY"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     'content-length': '7616',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     date: 'Sun, 24 May 2015 04:27:45 GMT',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     connection: 'keep-alive',
+26 silly registry.get     'x-served-by': 'cache-iad2144-IAD',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1432441664.986585,VS0,VE354',
+26 silly registry.get     vary: 'Accept' } ]
+27 silly addNameRange number 2 { name: 'thor', range: '*', hasData: true }
+28 silly addNameRange versions [ 'thor', [ '0.0.0', '1.0.0' ] ]
+29 verbose addNamed [ 'thor', '1.0.0' ]
+30 verbose addNamed [ '1.0.0', '1.0.0' ]
+31 silly lockFile 8a339fcb-thor-1-0-0 thor@1.0.0
+32 verbose lock thor@1.0.0 /Users/hugodemiglio/.npm/8a339fcb-thor-1-0-0.lock
+33 silly lockFile 6f7765ac-ry-npmjs-org-thor-thor-1-0-0-tgz https://registry.npmjs.org/thor/-/thor-1.0.0.tgz
+34 verbose lock https://registry.npmjs.org/thor/-/thor-1.0.0.tgz /Users/hugodemiglio/.npm/6f7765ac-ry-npmjs-org-thor-thor-1-0-0-tgz.lock
+35 verbose addRemoteTarball [ 'https://registry.npmjs.org/thor/-/thor-1.0.0.tgz',
+35 verbose addRemoteTarball   '388e1838aeb3a386e7ce2e1dcce3efc63f0e49e3' ]
+36 info retry fetch attempt 1 at 01:27:45
+37 verbose fetch to= /var/folders/6s/04l1t3lx2cx23_mv3wk31tfm0000gn/T/npm-3013-IQaNDXB5/registry.npmjs.org/thor/-/thor-1.0.0.tgz
+38 http GET https://registry.npmjs.org/thor/-/thor-1.0.0.tgz
+39 http 200 https://registry.npmjs.org/thor/-/thor-1.0.0.tgz
+40 silly lockFile 6f7765ac-ry-npmjs-org-thor-thor-1-0-0-tgz https://registry.npmjs.org/thor/-/thor-1.0.0.tgz
+41 silly lockFile 6f7765ac-ry-npmjs-org-thor-thor-1-0-0-tgz https://registry.npmjs.org/thor/-/thor-1.0.0.tgz
+42 silly lockFile 8a339fcb-thor-1-0-0 thor@1.0.0
+43 silly lockFile 8a339fcb-thor-1-0-0 thor@1.0.0
+44 silly lockFile 9f1f6737-thor thor@
+45 silly lockFile 9f1f6737-thor thor@
+46 silly resolved [ { name: 'thor',
+46 silly resolved     version: '1.0.0',
+46 silly resolved     description: 'Thor is WebSocket benchmark utility',
+46 silly resolved     main: 'index.js',
+46 silly resolved     scripts: { test: 'echo "Error: no test specified" && exit 1' },
+46 silly resolved     repository: { type: 'git', url: 'https://github.com/observing/thor.git' },
+46 silly resolved     keywords: [ 'WebSocket', 'benchmark', 'load' ],
+46 silly resolved     author: { name: 'Arnout Kazemier', email: 'opensource@observe.it' },
+46 silly resolved     license: 'MIT',
+46 silly resolved     dependencies:
+46 silly resolved      { commander: '1.1.x',
+46 silly resolved        async: '0.2.x',
+46 silly resolved        tab: '0.1.x',
+46 silly resolved        colors: '0.6.x',
+46 silly resolved        ws: 'git://github.com/3rd-Eden/ws.git',
+46 silly resolved        'fast-stats': 'git://github.com/bluesmoon/node-faststats.git',
+46 silly resolved        sugar: '1.3.8' },
+46 silly resolved     bin: { thor: './bin/thor' },
+46 silly resolved     _id: 'thor@1.0.0',
+46 silly resolved     dist:
+46 silly resolved      { shasum: '388e1838aeb3a386e7ce2e1dcce3efc63f0e49e3',
+46 silly resolved        tarball: 'http://registry.npmjs.org/thor/-/thor-1.0.0.tgz' },
+46 silly resolved     _npmVersion: '1.1.71',
+46 silly resolved     _npmUser: { name: 'V1', email: 'info@3rd-Eden.com' },
+46 silly resolved     maintainers: [ [Object] ],
+46 silly resolved     directories: {},
+46 silly resolved     _shasum: '388e1838aeb3a386e7ce2e1dcce3efc63f0e49e3',
+46 silly resolved     _from: 'thor@',
+46 silly resolved     _resolved: 'https://registry.npmjs.org/thor/-/thor-1.0.0.tgz' } ]
+47 info install thor@1.0.0 into /usr/local/lib
+48 info installOne thor@1.0.0
+49 verbose lib/node_modules/thor unbuild
+50 verbose tar unpack /Users/hugodemiglio/.npm/thor/1.0.0/package.tgz
+51 silly lockFile 5fc0485c--usr-local-lib-node-modules-thor tar:///usr/local/lib/node_modules/thor
+52 verbose lock tar:///usr/local/lib/node_modules/thor /Users/hugodemiglio/.npm/5fc0485c--usr-local-lib-node-modules-thor.lock
+53 silly lockFile 25acd948-iglio-npm-thor-1-0-0-package-tgz tar:///Users/hugodemiglio/.npm/thor/1.0.0/package.tgz
+54 verbose lock tar:///Users/hugodemiglio/.npm/thor/1.0.0/package.tgz /Users/hugodemiglio/.npm/25acd948-iglio-npm-thor-1-0-0-package-tgz.lock
+55 silly gunzTarPerm modes [ '755', '644' ]
+56 error Error: EACCES, mkdir '/usr/local/lib/node_modules/thor'
+56 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/thor']
+56 error   errno: 3,
+56 error   code: 'EACCES',
+56 error   path: '/usr/local/lib/node_modules/thor',
+56 error   fstream_type: 'Directory',
+56 error   fstream_path: '/usr/local/lib/node_modules/thor',
+56 error   fstream_class: 'DirWriter',
+56 error   fstream_stack:
+56 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+56 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+56 error      'Object.oncomplete (fs.js:107:15)' ] }
+57 error Please try running this command again as root/Administrator.
+58 error System Darwin 14.3.0
+59 error command "node" "/usr/local/bin/npm" "install" "-g" "thor"
+60 error cwd /Users/hugodemiglio/Projetos/live-event
+61 error node -v v0.10.32
+62 error npm -v 1.4.28
+63 error path /usr/local/lib/node_modules/thor
+64 error fstream_path /usr/local/lib/node_modules/thor
+65 error fstream_type Directory
+66 error fstream_class DirWriter
+67 error code EACCES
+68 error errno 3
+69 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/thor'
+70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+70 error fstream_stack Object.oncomplete (fs.js:107:15)
+71 verbose exit [ 3, true ]
