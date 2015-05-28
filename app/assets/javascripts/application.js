@@ -4,7 +4,8 @@
 (function () {
   'use strict';
 
-  var videoElement = document.querySelector('.ui.video');
+  var videoElement, timelineTimeout;
+  videoElement = document.querySelector('.ui.video');
 
   websocket.connect('socket');
 
@@ -12,7 +13,13 @@
     var detail = event.detail;
 
     if (detail.type === 'message') {
+      timeline.showTimeline();
       timeline.addMessage(detail);
+
+      clearTimeout(timelineTimeout);
+      timelineTimeout = setTimeout(function() {
+        timeline.hideTimeline();
+      }, 30000);
     } else if (detail.type === 'delete') {
       timeline.removeMessage(detail.id);
     }  else if (detail.type === 'event') {
@@ -22,7 +29,7 @@
 
       if (oldVideoId !== detail.video_id) {
         videoElement.dataset.videoId = detail.video_id;
-        
+
         regex = new RegExp(oldVideoId, 'g');
         iframeElement.src = iframeElement.src.replace(regex, detail.video_id);
       }
