@@ -4,7 +4,7 @@ class Admin::DashboardController < ApplicationController
   def index
     @event = Event.first
     @messages = Message.order('id desc').limit(20).reverse
-    @online_users = User.where(online: true)
+    @online_users = User.where('id = ? OR online = ?', current_user.id, true)
   end
   
   def event

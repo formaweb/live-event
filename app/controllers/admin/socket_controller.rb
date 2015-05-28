@@ -21,13 +21,6 @@ class Admin::SocketController < ApplicationController
         case message['type']
         when 'typing'
           Redis.new.publish('event_1', {'type' => 'typing', 'user_id' => current_user.udid, 'user_name' => current_user.name, 'message' => message['message'], 'user_photo' => current_user.photo(nil)}.to_json)
-        when 'delete'
-          target_message = current_user.messages.where(id: message['id']).first
-          if target_message.nil?
-            Redis.new.publish('event_1', {'type' => 'error', 'errors' => ['Ocorreu um erro ao deletar.'], 'user_id' => current_user.udid}.to_json)
-          else
-            target_message.destroy
-          end
         end
       end
       

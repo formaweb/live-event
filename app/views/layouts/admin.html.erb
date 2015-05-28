@@ -12,6 +12,7 @@
 <header role="banner" class="layout header">
   <h1 class="brand"><%= @event.name %></h1>
   <div class="user">
+    <span class="connection-status" style="background-color: silver; display: inline-block; width: 10px; height: 10px; border-radius: 100%;"></span>
     Olá <%= current_user.name %>
     <%= link_to 'Sair', destroy_user_session_path, method: :delete, :'data-confirm' => 'Tem certeza que deseja sair?' %>
   </div>

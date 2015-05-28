@@ -15,7 +15,7 @@ var timeline = (function () {
     messages.scrollTop = messages.scrollHeight;
   }
 
-  function messageTemplate(data) {
+  function messageTemplate(data, userId) {
     var template, message, meta, userPhoto, userName, closeButton, content, contentImage;
 
     template = document.getElementsByClassName(messageTemplateClass)[0].content;
@@ -47,13 +47,17 @@ var timeline = (function () {
       contentImage.onload = scrollDown;
       content.appendChild(contentImage);
     }
+    
+    if (data.user_id != userId) {
+      closeButton.remove();
+    }
 
     content.appendChild(document.createTextNode(data.message));
 
     return template;
   }
 
-  function userTemplae(data) {
+  function userTemplate(data) {
     var template, user, meta;
 
     template = document.getElementsByClassName(userTemplateClass)[0].content;
@@ -71,8 +75,8 @@ var timeline = (function () {
 
   //--- Public Methods ---//
   return {
-    addMessage: function (data) {
-      var template = messageTemplate(data);
+    addMessage: function (data, userId) {
+      var template = messageTemplate(data, userId);
       document.getElementsByClassName(messagesClass)[0].appendChild(template);
       scrollDown();
     },
@@ -80,12 +84,12 @@ var timeline = (function () {
       document.querySelector('.message-' + id).classList.add('deleted');
     },
 
-    addUser: function (id) {
+    addUser: function (data) {
       var template = userTemplate(data);
       document.getElementsByClassName(usersClass)[0].appendChild(template);
     },
     removeUser: function (id) {
-      document.querySelector('.js-user-' + id).removeChild();
+      document.querySelector('.js-user-' + id).remove();
     },
     updateUserMessage: function (id, message) {
       var user, content, awayClass, awayMessage;

@@ -7,7 +7,7 @@
 
   var i, userId, formsElements;
   userId = document.body.dataset.userId;
-
+  
   window.onload = function () {
     timeline.scrollDown();
   }
@@ -27,6 +27,14 @@
   //    WebSocket    //
   //-----------------//
   websocket.connect('admin/socket');
+  
+  document.addEventListener('websocket.status', function (event) {
+    if(event.detail.status){
+      document.querySelector('.connection-status').style.backgroundColor = 'green';
+    } else {
+      document.querySelector('.connection-status').style.backgroundColor = 'red';
+    }
+  });
 
   //--- Message Listener ---//
   document.addEventListener('websocket.message', function (event) {
@@ -35,20 +43,23 @@
     type = detail.type
 
     if (type === 'message') {
-      timeline.addMessage(detail);
+      timeline.addMessage(detail, userId);
+      timeline.updateUserMessage(detail.user_id, '');
     } else if (type === 'delete') {
       timeline.removeMessage(detail.id);
     } else if (type === 'typing') {
       timeline.updateUserMessage(detail.user_id, detail.message);
     } else if (type === 'user') { 
-      if (document.querySelector('.js-user-' + detail.user_id).length > 0) {
+      if (document.querySelector('.js-user-' + detail.user_id) != undefined) {
         if (!detail.online) { timeline.removeUser(detail.user_id); }
       } else {
-        timeline.addUser(detail.user_id);
+        if (detail.online) { timeline.addUser(detail); }
       }
     } else if (type === 'event') {
-      settings.updateName(detail.event_name);
-      settings.updateVideo(detail.video_id, detail.video_url);
+      setTimeout(function(){
+        settings.updateName(detail.event_name);
+        settings.updateVideo(detail.video_id, detail.video_url);
+      }, 1000);
     } else if (type === 'error' && userId === detail.user_id) {
       console.error(detail.errors);
     }
@@ -56,14 +67,18 @@
 
   //--- Delete Message ---//
   document.addEventListener('click', function (event) {
-    var self = event.target;
+    var self, request;
+    self = event.target;
 
     if (self.matches('.delete-message')) {
-      event.stopPropagation();
-      websocket.send({
-        id: self.dataset.messageId,
-        type: 'delete'
-      });
+      request = new XMLHttpRequest();
+
+      event.preventDefault();
+
+      request.open('DELETE', '/admin/messages/'+self.dataset.messageId, true);
+      request.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+      request.send();
     }
 
     return false;
@@ -108,9 +123,9 @@
     request.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
     request.onload = function () {
-      message.value = '';
       message.focus();
       submitButtonElement.disabled = false;
+      self.reset();
     };
 
     request.send(new FormData(this));

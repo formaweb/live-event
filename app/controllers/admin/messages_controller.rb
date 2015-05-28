@@ -17,7 +17,18 @@ class Admin::MessagesController < ApplicationController
   end
   
   def destroy
+    message = Message.find(params[:id])
     
+    if current_user.id == message.user.id
+      if message.nil?
+        render json: {errors: 'Error on delete this message.'}, status: 400
+      else
+        message.destroy
+        render json: {}
+      end
+    else
+      render json: {errors: 'You are not allowed to remove this message.'}, status: 403
+    end
   end
   
 end

@@ -33,3 +33,9 @@
 //   Layouts   //
 //-------------//
 @import 'layouts/admin/**/*';
+
+@media screen and (max-width: 950px) {
+  .sidebar, .collection.users {
+    display: none !important;
+  }
+}
