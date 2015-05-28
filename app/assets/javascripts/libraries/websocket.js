@@ -33,11 +33,13 @@ var websocket = (function () {
     };
   }
 
+  function send(data) {
+    socket.send(JSON.stringify(data));
+  }
+
   //--- Public Methods ---//
   return {
     connect: connect,
-    send: function (data) {
-      socket.send(JSON.stringify(data));
-    }
+    send: send
   };
 }());

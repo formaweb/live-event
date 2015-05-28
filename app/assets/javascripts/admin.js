@@ -1,166 +1,125 @@
-//= require jquery
-//= require jquery_ujs
-//= require websocket
+//= require 'libraries/websocket'
+//= require 'admin/settings'
+//= require 'admin/timeline'
 
-$(document).ready(function(){
-  var websocket = window.Formaweb.Websocket();
-  var user_id;
-  
-  user_id = $('body').attr('data-user-id');
-  
-  /* Init websocket connection */
-  websocket.init('admin/socket');
-  
-  /* Connection handler */
-  $(document).on('connection', function(e, data){
-    $('.connection').css('background-color', (data.status ? 'green' : 'red'));
-  });
-  
-  /* Message from server handler */
-  $(document).on('message', function(e, data){
-    
-    console.log('message', data);
-    
-    switch(data.type) {
-      
-      /* New tweet */
-      case 'tweet':
-        console.log('tweet', data);
-        break;
-      
-      /* User activity */
-      case 'user':
-        if($('.users .user.user_'+data.user_id).length > 0){
-          if(!data.online) $('.users .user.user_'+data.user_id).remove();
-        } else {
-          $('.collection.users').append('<div class="user user_'+data.user_id+'"><div class="meta">'+data.user_name+'</div><div class="content away">Nenhuma atividade identificada.</div></div>');
-        }
-        break;
-      
-      /* Event configuration changed */
-      case 'event':
-        $('#video_url').val(data.video_url).attr('value', data.video_url);
-        $('#event_name').val(data.event_name).attr('value', data.event_name);
-        $('.brand').text(data.event_name);
-        if(data.video_url == ''){
-          $('.video').html('').attr('data-video-id', '');
-        } else {
-          if($('.video').attr('data-video-id') != data.video_id){
-            $('.video').html('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+data.video_id+'" frameborder="0" allowfullscreen></iframe>').attr('data-video-id', data.video_id);
-          }
-        }
-        break;
-      
-      /* New message */
-      case 'message':
-        // Remove typing if user was typing
-        if($('.messages .typing#'+data.user_id).length > 0) $('.messages .typing#'+data.user_id).remove();
-        // Show the message
-        $('.messages').append('<div class="message" id="message_'+data.id+'"><img src="'+data.user_photo+'" width="20" style="border-radius: 100%;"> '+data.user_name+': '+data.message+(data.image != '' ? ' <img src="'+data.image+'" height="300">' : '')+(data.user_id == user_id ? ' <a href="#" class="delete-message" data-id="'+data.id+'">apagar</a>' : '')+'</div>');
-        break;
-      
-      /* User is typing */
-      case 'typing':
-        if(data.user_id == user_id) return;
-        
-        if($('.users .user.user_'+data.user_id).length > 0){
-          if(data.message.length == 0) {
-            $('.users .user.user_'+data.user_id+' .content').text('Nenhuma atividade identificada.');
-          } else {
-            $('.users .user.user_'+data.user_id+' .content').html('<strong>Esta digitando:</strong> '+data.message);
-          }
-        } else {
-          if(data.message.length > 0) {
-            $('.messages').append('<div class="typing" id="'+data.user_id+'">'+data.user_name+' está digitando: <span class="content">'+data.message+'</div></div>');
-          }
-        }
-        break;
-      
-      /* Delete message */
-      case 'delete':
-        if($('.message#message_'+data.id).length > 0) $('.message#message_'+data.id).remove();
-        console.log('delete', data);
-        break;
-      
-      /* Erro on response */
-      case 'error':
-        if(user_id == data.user_id) alert(data.errors);
-        break;
+(function () {
+  'use strict';
+
+  var i, userId, formsElements;
+  userId = document.body.dataset.userId;
+
+  window.onload = function () {
+    timeline.scrollDown();
+  }
+
+  //--- Confirmation ---//
+  document.addEventListener('click', function (event) {
+    var self = event.target;
+
+    if (self.matches('[data-confirm]')) {
+      event.stopPropagation();
+      return confirm(self.dataset.confirm);
     }
   });
-  
-  /* Delete a message */
-  $(document).on('click', '.delete-message', function(){
-    if(confirm('Tem certeza que deseja apagar essa bela mensagem?')){
+
+
+  //-----------------//
+  //    WebSocket    //
+  //-----------------//
+  websocket.connect('admin/socket');
+
+  //--- Message Listener ---//
+  document.addEventListener('websocket.message', function (event) {
+    var detail, type;
+    detail = event.detail;
+    type = detail.type
+
+    if (type === 'message') {
+      timeline.addMessage(detail);
+    } else if (type === 'delete') {
+      timeline.removeMessage(detail.id);
+    } else if (type === 'typing') {
+      timeline.updateUserMessage(detail.user_id, detail.message);
+    } else if (type === 'user') { 
+      if (document.querySelector('.js-user-' + detail.user_id).length > 0) {
+        if (!detail.online) { timeline.removeUser(detail.user_id); }
+      } else {
+        timeline.addUser(detail.user_id);
+      }
+    } else if (type === 'event') {
+      settings.updateName(detail.event_name);
+      settings.updateVideo(detail.video_id, detail.video_url);
+    } else if (type === 'error' && userId === detail.user_id) {
+      console.error(detail.errors);
+    }
+  });
+
+  //--- Delete Message ---//
+  document.addEventListener('click', function (event) {
+    var self = event.target;
+
+    if (self.matches('.delete-message')) {
+      event.stopPropagation();
       websocket.send({
-        id: $(this).attr('data-id'),
+        id: self.dataset.messageId,
         type: 'delete'
       });
     }
-    
+
     return false;
   });
-  
-  /* Send to server typing option */
-  $('#typing').on('change', function(){
+
+  //--- Typing Toggle ---//
+  typing.addEventListener('change', function (event) {
     websocket.send({
-      message: ($(this).is(':checked') ? $('#message').val() : ''),
+      message: (this.checked ? message.value : ''),
       type: 'typing'
     });
   });
-  
-  /* Seng typing data to server */
-  $('textarea#message').on('keyup', function(e){
-    if(e.keyCode == 13){
-      $('#message_form').submit();
+
+  //--- Typing Data ---//
+  message.addEventListener('keyup', function (event) {
+    if (event.keyCode === 13 && !event.shiftKey) {
+      sendFormData.call(document.querySelector('.send.form'), event);
+      event.stopPropagation();
       return false;
     }
-    
-    if($('#typing').is(':checked')){
+
+    if (typing.checked) {
       websocket.send({
-        message: $('#message').val(),
+        message: this.value,
         type: 'typing'
       });
     }
-    
   });
-  
-  /* Send form to server */
-  $('form').on('submit', function(){
-    var form = $(this);
-    var form_data = form.serialize();
-    var submit_button = form.find('button');
-    
-    $.ajax({
-      url: form.attr('action'),
-      method: 'post',
-      dataType: 'json',
-      data: new FormData(this),
-      processData: false,
-      contentType: false,
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-        submit_button.attr('disabled');
-      },
-      success: function(data){
-        submit_button.removeAttr('disabled');
-        form[0].reset();
-        $('#message').focus();
-      }
-    });
-    
+
+  //--- Sending Form Data ---//
+  function sendFormData(event) {
+    var self, request, submitButtonElement;
+
+    self = this;
+    request = new XMLHttpRequest();
+    submitButtonElement = self.querySelector('[type="submit"]');
+
+    event.preventDefault();
+    submitButtonElement.disabled = true;
+
+    request.open('POST', this.action, true);
+    request.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+    request.onload = function () {
+      message.value = '';
+      message.focus();
+      submitButtonElement.disabled = false;
+    };
+
+    request.send(new FormData(this));
+
     return false;
-  });
-  
-  /* Send event configurations to server */
-  // $('#event_form').on('submit', function(){
-  //
-  //   websocket.send({
-  //     video_url: $('#video_url').val(),
-  //     event_name: $('#event_name').val(),
-  //     type: 'event'
-  //   });
-  //
-  //   return false;
-  // });
-});
+  }
+
+  formsElements = document.getElementsByTagName('form');
+  for (i = 0; i < formsElements.length; i++) {
+    formsElements[i].addEventListener('submit', sendFormData);
+  }
+}());

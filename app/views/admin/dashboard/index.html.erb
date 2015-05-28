@@ -1,61 +1,68 @@
-<aside role="complementary" class="collection users">
+<% content_for :templates do %>
+<template class="js-message-template">
+<%= render partial: 'message' %>
+</template>
+
+<template class="js-user-template">
+<%= render partial: 'user' %>
+</template>
+<% end %>
+
+<aside role="complementary" class="collection users js-users">
   <% @online_users.each do |user| %>
-  <div class="user user_<%= user.udid %>">
-    <div class="meta"><%= user.name %></div>
-    <div class="content away">Nenhuma atividade identificada.</div>
-  </div>
+  <%= render partial: 'user', locals: { user: user } %>
   <% end %>
 </aside>
 
 <div class="collection timeline">
-  <div class="messages">
+  <div class="messages js-messages">
     <% @messages.each do |message| %>
-    <div class="message" id="message_<%= message.id %>">
-      <div class="meta">
-      <%= image_tag message.user.photo(nil), width: '20', style: 'border-radius: 100%;' %> 
-      <%= message.user.name %>
-      <% if current_user.id == message.user.id %>
-        <%= link_to 'apagar', '#', :'data-id' => message.id, class: 'delete-message' %>
-      <% end %>
-      </div>
-      <div class="content">
-        <% if message.image? %><%= image_tag message.image.content %><% end %>
-        <%= message.message %>
-      </div>
-    </div>
+    <%= render partial: 'message', locals: { message: message } %>
     <% end %>
   </div>
 
-  <%= form_tag admin_messages_path(format: :json), id: 'message_form', class: 'send', multipart: true do %>
-  <%= hidden_field_tag 'id', '' %>
-  <%= text_area_tag 'message', '', placeholder: 'Digite sua mensagem...', autofocus: true %>
+  <%= form_tag admin_messages_path(format: :json), class: 'ui send form', multipart: true do %>
+    <%= hidden_field_tag 'id', '' %>
+    <%= text_area_tag 'message', '', placeholder: 'Digite sua mensagem...', autofocus: true %>
 
-    <div class="actions">
-      <%= check_box_tag 'typing', 'typing', true %>
-      <%= label_tag 'typing', 'Mostrar aos administradores o que estou digitando' %>
-      <%= file_field_tag 'image' %>
-      <button type="submit">Enviar</button>
+    <div class="options">
+      <button type="submit" class="ui button">Enviar</button>
+
+      <div class="field">
+        <%= file_field_tag 'image' %>
+      </div>
+
+      <div class="field boolean">
+        <%= check_box_tag 'typing', 'typing', true %>
+        <%= label_tag 'typing', 'Mostrar aos administradores o que estou digitando' %>
+      </div>
     </div>
   <% end %>
 </div>
 
 <aside role="complementary" class="collection sidebar">
-  <div class="video">
+  <div class="video" data-video-id="<%= @event.get_youtube_video_id %>">
     <% unless @event.video_url.blank? %>
-    <iframe data-video-id="<%= @event.get_youtube_video_id %>" width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
     <% end %>
   </div>
 
   <% if current_user.super_user %>
-  <%= form_tag event_admin_dashboard_index_path(format: :json), id: 'event_form' do %>
+  <%= form_tag event_admin_dashboard_index_path(format: :json), class: 'ui settings form' do %>
 
-    <%= label_tag 'event_name', 'Nome do evento:' %>
-    <%= text_field_tag 'event_name', @event.name %>
+    <div class="field">
+      <%= label_tag 'event_name', 'Nome do evento:' %>
+      <%= text_field_tag 'event_name', @event.name %>
+    </div>
 
-    <%= label_tag 'video_url', 'Link do Vídeo:' %>
-    <%= text_field_tag 'video_url', @event.video_url %>
+    <div class="field">
+      <%= label_tag 'video_url', 'Link do Vídeo:' %>
+      <%= text_field_tag 'video_url', @event.video_url %>
+    </div>
 
-    <button type="submit">Salvar</button>
+    <div class="actions">
+      <button type="submit" class="ui button">Salvar</button>
+    </div>
   <% end %>
   <% end %>
 </aside>

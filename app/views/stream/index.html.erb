@@ -4,9 +4,9 @@
 </template>
 <% end %>
 
-<section class="ui video">
+<section class="ui video" data-video-id="<%= @event.get_youtube_video_id %>">
   <div class="embed">
-    <iframe width="1280" height="720" src="//www.youtube.com/embed/<%= @event.get_youtube_video_id %>?autoplay=0&controls=2&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
+    <iframe width="1280" height="720" src="//www.youtube.com/embed/<%= @event.get_youtube_video_id %>?playlist=<%= @event.get_youtube_video_id %>&autoplay=1&loop=1&controls=2&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
   </div>
 
   <div class="brand">

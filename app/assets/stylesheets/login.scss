@@ -1,5 +1,5 @@
 //***************//
-//     Admin     //
+//     Login     //
 //***************//
 
 
@@ -24,12 +24,29 @@
 @import 'components/form';
 
 
-//-----------------//
-//   Collections   //
-//-----------------//
 
+body {
+  background: #f7f7f7;
+}
 
-//-------------//
-//   Layouts   //
-//-------------//
-@import 'layouts/admin/**/*';
+.layout.main {
+  background: $white;
+  border-radius: $radius;
+  left: 50%;
+  padding: 25px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 350px;
+
+  h2 {
+    font-size: 40px;
+    margin-bottom: 30px;
+  }
+
+  .links {
+    font-size: 11px;
+    margin-top: -23px;
+    a { color: inherit; }
+  }
+}

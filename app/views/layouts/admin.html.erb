@@ -7,7 +7,6 @@
   <title>Live Event Dashboard</title>
 
   <%= stylesheet_link_tag    'admin', media: 'all' %>
-  <%= javascript_include_tag 'admin' %>
 </head>
 <body class="section <%= section_label %>" data-user-id="<%= current_user.udid %>">
 <header role="banner" class="layout header">
@@ -22,5 +21,9 @@
 <main role="main" class="layout main">
 <%= yield %>
 </main>
+
+<%= yield :templates %>
+
+<%= javascript_include_tag 'admin' %>
 </body>
 </html>

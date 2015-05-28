@@ -1,0 +1,85 @@
+.ui.form {
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  input[type='text'], input[type='email'], input[type='url'], input[type='password'], textarea {
+    border: 1px solid rgba($gray, 0.5);
+    border-radius: 3px;
+    display: block;
+    outline: 0;
+    padding: 8px;
+    transition: border-color 500ms;
+    width: 100%;
+
+    &:focus { border-color: $primary-color; }
+  }
+
+  > .field {
+    margin-bottom: 10px;
+    &:last-child { margin-bottom: 0; }
+  }
+
+  > .actions {
+    margin-top: 5px;
+    text-align: right;
+  }
+  
+  .boolean {
+    backface-visibility: hidden;
+    cursor: pointer;
+    display: inline-block;
+    outline: 0;
+    position: relative;
+
+    input[type='checkbox'] {
+      left: 0;
+      opacity: 0;
+      outline: 0;
+      position: absolute;
+      top: 0;
+
+      &:checked ~ label {
+        &:after { left: 1.55em; }
+        &:before { background-color: $primary-color; }
+      }
+    }
+
+    label {
+      padding-left: 3.5em;
+      padding-top: 0.05em;
+
+      &:after, &:before {
+        content: '';
+        cursor: pointer;
+        height: 1.5em;
+        position: absolute;
+      }
+
+      &:after {
+        background: $white;
+        border-radius: $circular-radius;
+        box-shadow: 0 1px 2px 0 rgba($black, 0.05), 0 0 0 1px rgba($black, 0.15) inset;
+        left: -0.05em;
+        top: 0;
+        transition: left 250ms ease-out;
+        width: 1.5em;
+        z-index: 2;
+      }
+
+      &:before {
+        background-color: $silver;
+        border-radius: $circular-radius;
+        left: 0;
+        top: 0;
+        transition: background-color 250ms ease;
+        width: 3em;
+        z-index: 1;
+      }
+    }
+  }
+}
