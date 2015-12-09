@@ -6,7 +6,7 @@ var websocket = (function () {
 
   //--- Private Methods ---//
   function connect(path) {
-    socket = new WebSocket('ws://' + location.host + '/' + path);
+    socket = new WebSocket('wss://' + location.host + '/' + path);
 
     socket.onopen = function () {
       var event = new CustomEvent('websocket.status', { detail: { status: true } });
