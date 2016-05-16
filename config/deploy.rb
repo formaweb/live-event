@@ -20,31 +20,33 @@ namespace :deploy do
     # Create links
     run "ln -nfs #{File.join(shared_path, 'system')} #{File.join(release_path, 'public', 'system')}"
     run "ln -nfs #{File.join(shared_path, 'uploads')} #{File.join(release_path, 'public', 'uploads')}"
-    
+
+    # run "cp #{File.join(shared_path, 'database.yml')} #{File.join(release_path, 'config', 'database.yml')}"
+
     # Set folder permissions
     run "chmod -R 777 #{File.join(shared_path, 'log')}"
     run "chmod -R 777 #{File.join(release_path, 'public')}"
     run "chmod -R 777 #{File.join(shared_path, 'uploads')}"
     run "chmod -R 777 #{File.join(shared_path, 'system')}"
     run "chmod -R 777 #{File.join(release_path, 'tmp')}"
-    
+
     # Kill Puma
     run "kill `cat #{File.join(shared_path, 'pids', 'puma.pid')}`"
-    
+
     # Run migrations and database seed
     run "cd #{File.join(release_path)} && bundle exec rake db:migrate RAILS_ENV=production"
     # run "cd #{File.join(release_path)} && bundle exec rake db:seed RAILS_ENV=production"
-    
+
     # Precompile the assets
     run "cd #{File.join(release_path)} && bundle exec rake assets:precompile RAILS_ENV=production"
-    
+
     # Configure and reboot Nginx
     run "ln -nfs #{File.join(release_path, 'config', 'nginx.conf')} /etc/nginx/sites-enabled/live_event"
     run "/etc/init.d/nginx restart"
-    
+
     # Start Puma
     run "cd #{File.join(release_path)} && bundle exec puma -e production -C #{File.join(release_path, 'config', 'puma.rb')} -d"
-    
+
     # Cache clear
     run "cd #{File.join(release_path)} && bundle exec rails runner -e production 'Rails.cache.clear'"
   end

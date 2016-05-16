@@ -1,14 +1,41 @@
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   # For details on connection pooling, see rails configuration guide
+#   # http://guides.rubyonrails.org/configuring.html#database-pooling
+#   pool: 5
+#
+# development:
+#   adapter: postgresql
+#   encoding: utf8
+#   database: live_event
+#   host: 127.0.0.1
+#   username: <%= (`whoami`).strip %>
+#   password:
 default: &default
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  adapter: mysql2
+  encoding: utf8
   pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
 
 development:
-  adapter: postgresql
+  <<: *default
+  database: live-event_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: live-event_test
+
+production:
+  adapter: mysql2
   encoding: utf8
-  database: live_event
+  pool: 5
   host: 127.0.0.1
-  username: <%= (`whoami`).strip %>
-  password:
+  database: live-event_production
+  username: live-event
+  password: <%= ENV['LIVE_EVENT_DATABASE_PASSWORD'] %>
