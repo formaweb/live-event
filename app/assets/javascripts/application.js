@@ -1,38 +1,42 @@
 //= require 'libraries/websocket'
 //= require 'application/timeline'
 
-(function () {
-  'use strict';
-
-  var videoElement, timelineTimeout;
-  videoElement = document.querySelector('.ui.video');
+(function() {
+  var videoElement = document.querySelector('.ui.video'),
+      timelineTimeout;
 
   websocket.connect('socket');
 
-  document.addEventListener('websocket.message', function (event) {
-    var detail = event.detail;
-
-    if (detail.type === 'message') {
+  function parseMessage(data) {
+    // Type: Message
+    if (data.type === 'message') {
       timeline.showTimeline();
-      timeline.addMessage(detail);
+      timeline.addMessage(data);
 
       clearTimeout(timelineTimeout);
       timelineTimeout = setTimeout(function() {
         timeline.hideTimeline();
       }, 30000);
-    } else if (detail.type === 'delete') {
-      timeline.removeMessage(detail.id);
-    }  else if (detail.type === 'event') {
-      var oldVideoId, iframeElement, regex;
-      oldVideoId = videoElement.dataset.videoId;
-      iframeElement = videoElement.querySelector('iframe');
 
-      if (oldVideoId !== detail.video_id) {
-        videoElement.dataset.videoId = detail.video_id;
+    // Type: Delete
+    } else if (data.type === 'delete') {
+      timeline.removeMessage(data.id);
 
-        regex = new RegExp(oldVideoId, 'g');
-        iframeElement.src = iframeElement.src.replace(regex, detail.video_id);
+    // Type: Event
+    } else if (data.type === 'event') {
+      var oldVideoId = videoElement.dataset.videoId;
+      var iframeElement = videoElement.querySelector('iframe');
+
+      if (oldVideoId !== data.video_id) {
+        var regex = new RegExp(oldVideoId, 'g');
+        videoElement.dataset.videoId = data.video_id;
+        iframeElement.src = iframeElement.src.replace(regex, data.video_id);
       }
     }
+  }
+
+  document.addEventListener('websocket.message', function(event) {
+    var detail = event.detail;
+    parseMessage(detail);
   });
 }());
