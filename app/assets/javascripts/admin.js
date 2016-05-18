@@ -5,9 +5,57 @@
 (function () {
   'use strict';
 
-  var i, userId, formsElements;
-  userId = document.body.dataset.userId;
-  
+  var i, formsElements;
+
+  var userId = document.body.dataset.userId,
+      ajaxFallback = false,
+      ajaxInterval,
+      lastTimestamp;
+
+  function parseMessage(data) {
+    var type = data.type;
+
+    if (type === 'message') {
+      timeline.addMessage(data, userId);
+      timeline.updateUserMessage(data.user_id, '');
+    } else if (type === 'delete') {
+      timeline.removeMessage(data.id);
+    } else if (type === 'typing') {
+      timeline.updateUserMessage(data.user_id, data.message);
+    } else if (type === 'user') {
+      if (document.querySelector('.js-user-' + data.user_id) != undefined) {
+        if (!data.online) { timeline.removeUser(data.user_id); }
+      } else {
+        if (data.online) { timeline.addUser(data); }
+      }
+    } else if (type === 'event') {
+      setTimeout(function(){
+        settings.updateName(data.event_name);
+        settings.updateVideo(data.video_id, data.video_url);
+      }, 1000);
+    } else if (type === 'error' && userId === data.user_id) {
+      console.error(data.errors);
+    }
+  };
+
+  function getUsingAjax() {
+    var request = new XMLHttpRequest();
+
+    request.open('GET', '/messages.json?last_timestamp=' + (lastTimestamp || ''), true);
+    request.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+    request.onload = function() {
+      var response = JSON.parse(request.responseText);
+      lastTimestamp = response.timestamp;
+
+      response.detail.forEach(function(data) {
+        parseMessage(data);
+      });
+    };
+
+    request.send();
+  }
+
   window.onload = function () {
     timeline.scrollDown();
   }
@@ -22,51 +70,40 @@
     }
   });
 
-
   //-----------------//
   //    WebSocket    //
   //-----------------//
   websocket.connect('admin/socket');
-  
-  document.addEventListener('websocket.status', function (event) {
-    if(event.detail.status){
+
+  document.addEventListener('websocket.status', function(event) {
+    if (event.detail.status){
+      ajaxFallback = false;
+      clearInterval(ajaxInterval);
       document.querySelector('.connection-status').style.backgroundColor = 'green';
     } else {
       document.querySelector('.connection-status').style.backgroundColor = 'red';
     }
   });
 
-  //--- Message Listener ---//
-  document.addEventListener('websocket.message', function (event) {
-    var detail, type;
-    detail = event.detail;
-    type = detail.type
+  //--- Socket Error ---//
+  document.addEventListener('websocket.error', function(event) {
+    if (!ajaxFallback) {
+      ajaxFallback = true;
 
-    if (type === 'message') {
-      timeline.addMessage(detail, userId);
-      timeline.updateUserMessage(detail.user_id, '');
-    } else if (type === 'delete') {
-      timeline.removeMessage(detail.id);
-    } else if (type === 'typing') {
-      timeline.updateUserMessage(detail.user_id, detail.message);
-    } else if (type === 'user') { 
-      if (document.querySelector('.js-user-' + detail.user_id) != undefined) {
-        if (!detail.online) { timeline.removeUser(detail.user_id); }
-      } else {
-        if (detail.online) { timeline.addUser(detail); }
-      }
-    } else if (type === 'event') {
-      setTimeout(function(){
-        settings.updateName(detail.event_name);
-        settings.updateVideo(detail.video_id, detail.video_url);
-      }, 1000);
-    } else if (type === 'error' && userId === detail.user_id) {
-      console.error(detail.errors);
+      getUsingAjax();
+      ajaxInterval = setInterval(getUsingAjax, 5000);
     }
   });
 
+
+  //--- Message Listener ---//
+  document.addEventListener('websocket.message', function(event) {
+    var detail = event.detail;
+    parseMessage(detail);
+  });
+
   //--- Delete Message ---//
-  document.addEventListener('click', function (event) {
+  document.addEventListener('click', function(event) {
     var self, request;
     self = event.target;
 
@@ -86,10 +123,12 @@
 
   //--- Typing Toggle ---//
   typing.addEventListener('change', function (event) {
-    websocket.send({
-      message: (this.checked ? message.value : ''),
-      type: 'typing'
-    });
+    if (!ajaxFallback) {
+      websocket.send({
+        message: (this.checked ? message.value : ''),
+        type: 'typing'
+      });
+    }
   });
 
   //--- Typing Data ---//
@@ -100,7 +139,7 @@
       return false;
     }
 
-    if (typing.checked) {
+    if (typing.checked && !ajaxFallback) {
       websocket.send({
         message: this.value,
         type: 'typing'
