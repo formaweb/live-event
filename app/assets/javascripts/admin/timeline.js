@@ -47,7 +47,7 @@ var timeline = (function () {
       contentImage.onload = scrollDown;
       content.appendChild(contentImage);
     }
-    
+
     if (data.user_id != userId) {
       closeButton.remove();
     }
@@ -76,11 +76,14 @@ var timeline = (function () {
   //--- Public Methods ---//
   return {
     addMessage: function (data, userId) {
+      if(document.querySelector('.message-' + data.id)) return;
+
       var template = messageTemplate(data, userId);
       document.getElementsByClassName(messagesClass)[0].appendChild(template);
       scrollDown();
     },
     removeMessage: function (id) {
+      if(!document.querySelector('.message-' + data.id)) return;
       document.querySelector('.message-' + id).classList.add('deleted');
     },
 
