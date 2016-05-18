@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526001536) do
+ActiveRecord::Schema.define(version: 20160518024555) do
 
   create_table "events", force: :cascade do |t|
     t.boolean  "status",     limit: 1
@@ -26,8 +26,9 @@ ActiveRecord::Schema.define(version: 20150526001536) do
     t.integer  "user_id",    limit: 4
     t.text     "message",    limit: 65535
     t.string   "image",      limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.boolean  "deleted",    limit: 1,     default: false
   end
 
   create_table "users", force: :cascade do |t|
