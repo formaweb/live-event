@@ -44,8 +44,11 @@ var timeline = (function () {
       document.body.classList.remove(toggleClass);
     },
     addMessage: function (data) {
+      if(document.querySelector('.message-' + data.id)) return;
+
       var template = messageTemplate(data);
       document.getElementsByClassName(messagesClass)[0].appendChild(template);
+      document.body.classList.add(toggleClass);
     },
     removeMessage: function (id) {
       document.querySelector('.message-' + id).classList.add('removed');
