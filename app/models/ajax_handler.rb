@@ -2,7 +2,7 @@ class AjaxHandler
 
   def self.process_message event, breakpoint = nil
     if breakpoint.nil?
-      messages = event.messages.unscoped
+      messages = event.messages.unscoped.limit(10)
     else
       messages = event.messages.unscoped.where('updated_at >= ?', Time.zone.at(breakpoint.to_i))
     end
@@ -26,7 +26,7 @@ class AjaxHandler
       end
     end
 
-    detail << { type: 'event', name: event.name, video_url: event.video_url, video_id: event.get_youtube_video_id }
+    detail << { type: 'event', event_name: event.name, video_url: event.video_url, video_id: event.get_youtube_video_id }
 
     return { detail: detail, timestamp: Time.zone.now.to_i }
   end

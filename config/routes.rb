@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root 'stream#index'
 
-  resources :socket
+  # resources :socket
   resources :messages
 
   namespace :admin do

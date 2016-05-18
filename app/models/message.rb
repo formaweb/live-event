@@ -19,7 +19,7 @@ class Message < ActiveRecord::Base
 
   def destroy
     update_attribute(:deleted, true)
-    super
+    Redis.new.publish('event_'+self.event_id.to_s, {'type' => 'delete', 'id' => self.id}.to_json)
   end
 
 end

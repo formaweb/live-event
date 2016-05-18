@@ -51,6 +51,7 @@ var timeline = (function () {
       document.body.classList.add(toggleClass);
     },
     removeMessage: function (id) {
+      if(!document.querySelector('.message-' + id)) return;
       document.querySelector('.message-' + id).classList.add('removed');
     }
   };
