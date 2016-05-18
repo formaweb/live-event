@@ -22,7 +22,7 @@ var websocket = (function() {
       setTimeout(function() {
         connect(path);
         console.log('Reconnecting...');
-      }, 10000);
+      }, 60000);
     };
 
     socket.onerror = function() {

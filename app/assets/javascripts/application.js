@@ -61,14 +61,12 @@
       ajaxFallback = true;
 
       getUsingAjax();
-      ajaxInterval = setInterval(getUsingAjax, 1000);
+      ajaxInterval = setInterval(getUsingAjax, 5000);
     }
   });
 
   document.addEventListener('websocket.status', function(event) {
-    var status = event.detail.status;
-
-    if (status) {
+    if (event.detail.status) {
       ajaxFallback = false;
       clearInterval(ajaxInterval);
     }

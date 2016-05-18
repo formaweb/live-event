@@ -12,16 +12,17 @@
     }
 
     > .content {
-      background: $green;
+      background: rgba($white, 0.15);
       border-radius: $radius;
       display: inline-block;
-      font-size: 125%;
+      font-size: 200%;
       font-weight: 300;
       color: $white;
       padding: 10px 14px;
       position: relative;
 
       img {
+        background-color: $white;
         border-radius: $radius;
         display: block;
         margin: 4px 0;
