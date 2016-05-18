@@ -83,7 +83,6 @@ var timeline = (function () {
       scrollDown();
     },
     removeMessage: function (id) {
-      if(!document.querySelector('.message-' + data.id)) return;
       document.querySelector('.message-' + id).classList.add('deleted');
     },
 
