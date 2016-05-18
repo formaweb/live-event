@@ -2,9 +2,9 @@ class AjaxHandler
 
   def self.process_message event, breakpoint = nil
     if breakpoint.nil?
-      messages = event.messages
+      messages = event.messages.unscoped
     else
-      messages = event.messages.where('updated_at >= ?', Time.zone.at(breakpoint.to_i))
+      messages = event.messages.unscoped.where('updated_at >= ?', Time.zone.at(breakpoint.to_i))
     end
 
     detail = []
