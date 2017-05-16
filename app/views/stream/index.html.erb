@@ -6,7 +6,7 @@
 
 <section class="ui video" data-video-id="<%= @event.get_youtube_video_id %>">
   <div class="embed">
-    <iframe width="1280" height="720" src="//www.youtube.com/embed/<%= @event.get_youtube_video_id %>?playlist=<%= @event.get_youtube_video_id %>&autoplay=1&loop=1&controls=2&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
+    <iframe width="1280" height="720" src="//www.youtube.com/embed/<%= @event.get_youtube_video_id %>?playlist=<%= @event.get_youtube_video_id %>&autoplay=1&controls=2&showinfo=0&rel=0&enablejsapi=1" class="youtube" frameborder="0" allowfullscreen></iframe>
   </div>
 
   <div class="brand">
@@ -22,3 +22,6 @@
     <% end %>
   </article>
 </section>
+
+<iframe src="/countdown/waiting.html" class="navigator" frameborder="0"></iframe>
+<!-- ADD A CLASSE SHOW P/ ATIVAR -->
