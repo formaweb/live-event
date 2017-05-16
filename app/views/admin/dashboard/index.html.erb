@@ -41,7 +41,7 @@
 </div>
 
 <aside role="complementary" class="collection sidebar">
-  <div class="video" data-video-id="<%= @event.get_youtube_video_id %>">
+  <div class="video" data-video-id="<%= @event.get_youtube_video_id %>" data-video-url="<%= @event.video_url %>">
     <% unless @event.video_url.blank? %>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
     <% end %>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="field">
-      <%= label_tag 'video_url', 'Link do Vídeo:' %>
+      <%= label_tag 'video_url', 'Link:' %>
       <%= text_field_tag 'video_url', @event.video_url %>
     </div>
 

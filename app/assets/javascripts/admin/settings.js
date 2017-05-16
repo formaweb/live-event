@@ -18,10 +18,13 @@ var settings = (function () {
     var videoElement, iframeElement;
     videoElement = document.getElementsByClassName(videoClass)[0];
 
+    if (videoUrl) {
+      videoElement.dataset.videoUrl = videoUrl;
+    }
+
     if (!videoId) {
       videoElement.innerHTML = '';
       videoElement.dataset.videoId = '';
-      return;
     }
 
     if (videoId && videoId !== videoElement.dataset.videoId) {
@@ -36,7 +39,7 @@ var settings = (function () {
       videoElement.dataset.videoId = videoId;
     }
 
-    video_url.value = videoUrl;
+    video_url.value = videoUrl || '';
   }
 
 
