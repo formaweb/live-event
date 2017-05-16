@@ -45,7 +45,7 @@ namespace :deploy do
     run "/etc/init.d/nginx restart"
 
     # Start Puma
-    run "cd #{File.join(release_path)} && bundle exec puma -e production -C #{File.join(release_path, 'config', 'puma.rb')} -d"
+    run "cd #{File.join(release_path)} && bundle exec puma -e production -C #{File.join(release_path, 'config', 'puma_production.rb')} -d"
 
     # Cache clear
     run "cd #{File.join(release_path)} && bundle exec rails runner -e production 'Rails.cache.clear'"
