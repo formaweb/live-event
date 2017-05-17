@@ -41,9 +41,9 @@
 </div>
 
 <aside role="complementary" class="collection sidebar">
-  <div class="video" data-video-id="<%= @event.get_youtube_video_id %>" data-video-url="<%= @event.video_url %>">
+  <div class="video" data-video-id="<%= @event.get_youtube_video_id || 'null' %>" data-video-url="<%= @event.video_url %>">
     <% unless @event.video_url.blank? %>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @event.get_youtube_video_id || 'null' %>" frameborder="0" allowfullscreen></iframe>
     <% end %>
   </div>
 

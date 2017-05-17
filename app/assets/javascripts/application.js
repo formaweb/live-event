@@ -32,6 +32,16 @@
 
     // Type: Event
     } else if (data.type === 'event') {
+      var oldVideoId = videoElement.dataset.videoId;
+      var oldVideoUrl = videoElement.dataset.videoUrl;
+
+      if (oldVideoUrl == data.video_url) {
+        return;
+      }
+
+      videoElement.dataset.videoId = data.video_id;
+      videoElement.dataset.videoUrl = data.video_url;
+
       if (!data.video_id) {
         navigatorElement.src = data.video_url;
         navigatorElement.classList.add('show');
@@ -41,14 +51,10 @@
 
       navigatorElement.classList.remove('show');
 
-      var oldVideoId = videoElement.dataset.videoId;
       var iframeElement = videoElement.querySelector('.youtube');
+      var regex = new RegExp(oldVideoId, 'g');
 
-      if (oldVideoId !== data.video_id) {
-        var regex = new RegExp(oldVideoId, 'g');
-        videoElement.dataset.videoId = data.video_id;
-        iframeElement.src = iframeElement.src.replace(regex, data.video_id);
-      }
+      iframeElement.src = iframeElement.src.replace(regex, data.video_id);
 
       videoControl(true);
     }

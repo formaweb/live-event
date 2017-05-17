@@ -11,7 +11,7 @@ let presets = [{
   timestamp: 1495038900,
   label: 'Almooooço! Voltamos às 13h30.'
 }, {
-  timestamp: (Date.now() / 1000) + 1800,
+  timestamp: (Date.now() / 1000) + 2100,
   label: '☕️ #c0ffee'
 }];
 
@@ -55,7 +55,7 @@ function setCountdown(final) {
 
     if (timestamp < 0) {
       clearInterval(interval);
-      location.href = 'waiting.html';
+      location.href = '/countdown/waiting.html';
       return;
     }
 
