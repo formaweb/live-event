@@ -52,9 +52,7 @@
       navigatorElement.classList.remove('show');
 
       var iframeElement = videoElement.querySelector('.youtube');
-      var regex = new RegExp(oldVideoId, 'g');
-
-      iframeElement.src = iframeElement.src.replace(regex, data.video_id);
+      iframeElement.src = '//www.youtube.com/embed/' + data.video_id + '?playlist=' + data.video_id + '&autoplay=1&controls=2&showinfo=0&rel=0&enablejsapi=1';
 
       videoControl(true);
     }
