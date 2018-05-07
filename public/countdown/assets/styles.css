@@ -4,12 +4,11 @@
 }
 
 @keyframes colors {
-  0% { background-color: #5471f9; }
-  20% { background-color: #27e4fd; }
-  40% { background-color: #31e7b6; }
-  60% { background-color: #fed330; }
-  80% { background-color: #ff6c00; }
-  100% { background-color: #5471f9; }
+  0% { background-color: #536dfe; }
+  25% { background-color: #1ce8b5; }
+  50% { background-color: #ffd500; }
+  75% { background-color: #ff6c00; }
+  100% { background-color: #536dfe; }
 }
 
 @keyframes bounceInUp {
@@ -86,7 +85,7 @@ body {
 }
 
 .c-header .brand {
-  width: 480px;
+  width: 581px;
 }
 
 .c-header .organizer {
@@ -143,7 +142,7 @@ body {
 
 .c-countdown {
   animation: colors 60s infinite;
-  background: #5471F9 url('ncat.gif') left center no-repeat;
+  background: #536dfe url('ncat.gif') left center no-repeat;
   background-size: 120px;
   color: white;
   font-size: 100px;

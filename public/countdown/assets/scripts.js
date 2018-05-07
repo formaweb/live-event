@@ -3,12 +3,12 @@ let partnersSpeed = 5000;
 
 let presets = [{
   timestamp: (Date.now() / 1000) + 60,
-  label: '#io17 #io17rp #nafaap'
+  label: '#io18 #io18extended #io18rp'
 }, {
-  timestamp: 1495024500,
+  timestamp: 1525781700,
   label: 'Bem-vindos, fiquem à vontade.'
 }, {
-  timestamp: 1495038900,
+  timestamp: 1525797000,
   label: 'Almooooço! Voltamos às 13h30.'
 }, {
   timestamp: (Date.now() / 1000) + 2100,
