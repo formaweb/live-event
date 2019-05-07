@@ -44,14 +44,18 @@ var timeline = (function () {
       document.body.classList.remove(toggleClass);
     },
     addMessage: function (data) {
-      if(document.querySelector('.message-' + data.id)) return;
+      if (document.querySelector('.message-' + data.id)) return;
 
-      var template = messageTemplate(data);
-      document.getElementsByClassName(messagesClass)[0].appendChild(template);
+      var targetElements = document.getElementsByClassName(messagesClass);
+
+      for (var index = 0; index < targetElements.length; index++) {
+        targetElements[index].appendChild(messageTemplate(data));
+      }
+
       document.body.classList.add(toggleClass);
     },
     removeMessage: function (id) {
-      if(!document.querySelector('.message-' + id)) return;
+      if (!document.querySelector('.message-' + id)) return;
       document.querySelector('.message-' + id).classList.add('removed');
     }
   };

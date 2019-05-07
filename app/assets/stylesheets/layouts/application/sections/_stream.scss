@@ -1,34 +1,60 @@
 .section.stream {
   background: $black;
 
-  &.is-timeline-opened {
-    .ui.video { width: 70%; }
-    .ui.timeline { right: 0; }
-
-    .video-image { opacity: 0; }
-    .timeline-image { opacity: 1; }
+  .layout.main {
+    display: flex;
   }
 
-  .ui.video,
   .ui.timeline {
-    height: 100%;
+    height: calc(100vh - 160px);
+    position: relative;
+    width: calc((100% - 2064px) / 2);
+
+    .sponsors {
+      bottom: -130px;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+
+      > img {
+        display: inline-block;
+        max-width: 100%;
+      }
+    }
   }
 
   .ui.video {
-    transition: width 250ms 50ms;
-    width: 100%;
+    width: 2064px;
   }
 
-  .ui.timeline {
-    position: absolute;
-    right: -30%;
-    top: 0;
-    transition: right 500ms;
-    width: 30%;
-  }
+  // &.is-timeline-opened {
+  //   .ui.video { width: 70%; }
+  //   .ui.timeline { right: 0; }
 
-  .video-image,
-  .timeline-image {
-    max-width: 90%;
-  }
+  //   .video-image { opacity: 0; }
+  //   .timeline-image { opacity: 1; }
+  // }
+
+  // .ui.video,
+  // .ui.timeline {
+  //   height: 100%;
+  // }
+
+  // .ui.video {
+  //   transition: width 250ms 50ms;
+  //   width: 100%;
+  // }
+
+  // .ui.timeline {
+  //   position: absolute;
+  //   right: -30%;
+  //   top: 0;
+  //   transition: right 500ms;
+  //   width: 30%;
+  // }
+
+  // .video-image,
+  // .timeline-image {
+  //   max-width: 90%;
+  // }
 }

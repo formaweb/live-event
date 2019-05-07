@@ -4,11 +4,11 @@
 }
 
 @keyframes colors {
-  0% { background-color: #536dfe; }
-  25% { background-color: #1ce8b5; }
-  50% { background-color: #ffd500; }
-  75% { background-color: #ff6c00; }
-  100% { background-color: #536dfe; }
+  0% { background-color: #4285f4; }
+  25% { background-color: #e94235; }
+  50% { background-color: #fbbc04; }
+  75% { background-color: #34a853; }
+  100% { background-color: #4285f4; }
 }
 
 @keyframes bounceInUp {
@@ -74,7 +74,7 @@ body {
 }
 
 .c-header {
-  margin: 30px 0 0;
+  margin: 50px 0 0;
   width: 100%;
 }
 
@@ -85,12 +85,13 @@ body {
 }
 
 .c-header .brand {
-  width: 581px;
+  margin-top: 50px;
+  width: 1400px;
 }
 
 .c-header .organizer {
-  margin-bottom: 20px;
-  width: 80px;
+  margin-bottom: 50px;
+  width: 300px;
 }
 
 .c-main {
@@ -101,21 +102,21 @@ body {
 }
 
 .c-footer {
-  bottom: 30px;
-  text-align: center;
+  bottom: 50px;
   position: absolute;
+  text-align: center;
   width: 100%;
 }
 
 .c-footer .label {
-  font: normal 22px 'Maven Pro', sans-serif;
-  margin-bottom: 20px;
+  font: normal 50px 'Maven Pro', sans-serif;
+  margin-bottom: 50px;
 }
 
 .c-footer .partners,
 .c-footer .partner {
-  height: 100px;
-  width: 200px;
+  height: 200px;
+  width: 400px;
 }
 
 .c-footer .partners {
@@ -143,9 +144,9 @@ body {
 .c-countdown {
   animation: colors 60s infinite;
   background: #536dfe url('ncat.gif') left center no-repeat;
-  background-size: 120px;
+  background-size: 330px;
   color: white;
-  font-size: 100px;
+  font-size: 250px;
   line-height: 1;
   padding: 40px 0;
   text-align: center;
@@ -153,8 +154,8 @@ body {
 
 .c-countdown .separator {
   animation: fade 500ms infinite alternate;
-  font-size: 40px;
+  font-size: 100px;
   opacity: 0;
   position: relative;
-  top: -25px;
+  top: -60px;
 }

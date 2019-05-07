@@ -10,7 +10,6 @@ body {
   background: $background-color;
   color: $text-color;
   font: $font-weight $font-size/$line-height $font-family;
-  font-smoothing: $font-smoothing;
   min-width: $minimum-page-width;
 }
 

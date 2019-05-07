@@ -3,16 +3,16 @@ let partnersSpeed = 5000;
 
 let presets = [{
   timestamp: (Date.now() / 1000) + 60,
-  label: '#io18 #io18extended #io18rp'
+  label: '#io19 #io19rp'
 }, {
-  timestamp: 1525781700,
-  label: 'Bem-vindos, fiquem à vontade.'
+  timestamp: 1557229500,
+  label: 'Bem-vindo! O evento começa em instantes.'
 }, {
-  timestamp: 1525797000,
+  timestamp: 1557246600,
   label: 'Almooooço! Voltamos às 13h30.'
 }, {
-  timestamp: (Date.now() / 1000) + 2100,
-  label: '☕️ #c0ffee'
+  timestamp: 1557256500,
+  label: '☕️ #c0ff33'
 }];
 
 // Get Params.

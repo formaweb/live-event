@@ -4,23 +4,34 @@
 </template>
 <% end %>
 
-<section class="ui video" data-video-id="<%= @event.get_youtube_video_id || 'null' %>"  data-video-url="<%= @event.video_url %>">
-  <div class="embed">
-    <iframe width="1280" height="720" src="//www.youtube.com/embed/<%= @event.get_youtube_video_id || 'null' %>?playlist=<%= @event.get_youtube_video_id || 'null' %>&autoplay=1&controls=2&showinfo=0&rel=0&enablejsapi=1" class="youtube" frameborder="0" allowfullscreen></iframe>
-  </div>
-
-  <div class="brand">
-    <%= image_tag 'sponsors-p.png', class: 'video-image' %>
-    <%= image_tag 'sponsors-g.png', class: 'timeline-image' %>
-  </div>
-</section>
-
-<section class="ui timeline">
+<section class="ui timeline timeline-left">
   <article class="collection messages js-messages">
     <% @messages.each do |message| %>
     <%= render partial: 'message', locals: {message: message} %>
     <% end %>
   </article>
+
+  <div class="sponsors">
+    <%= image_tag 'sponsors.png', class: 'timeline-sponsors' %>
+  </div>
+</section>
+
+<section class="ui video" data-video-id="<%= @event.get_youtube_video_id || 'null' %>" data-video-url="<%= @event.video_url %>">
+  <div class="embed">
+    <iframe width="1280" height="720" src="//www.youtube.com/embed/<%= @event.get_youtube_video_id || 'null' %>?playlist=<%= @event.get_youtube_video_id || 'null' %>&autoplay=1&controls=2&showinfo=0&rel=0&enablejsapi=1" class="youtube" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section class="ui timeline timeline-right">
+  <article class="collection messages js-messages">
+    <% @messages.each do |message| %>
+    <%= render partial: 'message', locals: {message: message} %>
+    <% end %>
+  </article>
+
+  <div class="sponsors">
+    <%= image_tag 'sponsors.png', class: 'timeline-sponsors' %>
+  </div>
 </section>
 
 <iframe src="<% if @event.get_youtube_video_id.blank? %><%= @event.video_url %><% end %>" class="navigator<% if @event.get_youtube_video_id.blank? %> show<% end %>" frameborder="0"></iframe>
