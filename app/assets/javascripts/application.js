@@ -2,6 +2,8 @@
 //= require 'application/timeline'
 
 (function() {
+  console.warn('Habilite o "autoplay" em chrome://flags/#autoplay-policy.')
+
   var videoElement = document.querySelector('.ui.video'),
       navigatorElement = document.querySelector('.navigator'),
       timelineTimeout,
