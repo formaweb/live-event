@@ -56,7 +56,12 @@ var timeline = (function () {
     },
     removeMessage: function (id) {
       if (!document.querySelector('.message-' + id)) return;
-      document.querySelector('.message-' + id).classList.add('removed');
+
+      var messages = document.querySelectorAll('.message-' + id);
+
+      for (var index = 0; index < messages.length; index++) {
+        messages[index].classList.add('removed');
+      }
     }
   };
 }());
